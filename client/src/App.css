@@ -12,6 +12,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: #f5f6fa;
+  align-items: center;
 }
 .login-left h1 {
   font-size : 36px;
@@ -23,7 +24,7 @@
   margin-bottom: 20px;
 }
 .input-group input {
-  width : 80%;
+  width : 100%;
   padding: 15px 15px 15px 45px;
   border-radius: 8px;
   border: 1px solid #ccc;

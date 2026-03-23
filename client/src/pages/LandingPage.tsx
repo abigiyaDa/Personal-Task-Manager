@@ -8,7 +8,7 @@ export default function LandingPage(){
     navigate('/login');
   };
   const handleSignup = () => {
-    navigate('/signup');
+    navigate('/register');
   };
 
   return (

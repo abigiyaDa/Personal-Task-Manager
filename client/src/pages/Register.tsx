@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import illustration from "../assets/sign-up.png";
 import "../App.css";
+import { Link } from "react-router-dom";
+
+
 const Register = () => {
   const [form, setForm] = useState({
     firstName: "",
@@ -81,9 +84,9 @@ const Register = () => {
           </div>
 
           <button type="submit">Register</button>
-
           <p>
-            Already have an account? <span className="link">Sign In</span>
+           Already have an account?{" "}
+           <Link to="/login" className="link">Sign In</Link>
           </p>
         </form>
       </div>

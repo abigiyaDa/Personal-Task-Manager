@@ -2,7 +2,7 @@
 .login-container {
   display: flex;
   height: 100vh;
-  background-color: #f5f6fa ; /* #f5f6fa */
+  background-color: #f9f9fb ; /* #f5f6fa */
 }
 /* right side of login page */
 .login-left{
@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #f5f6fa;
 }
 .login-left h1 {
   font-size : 36px;
@@ -21,152 +22,8 @@
   position: relative;
   margin-bottom: 20px;
 }
-/* REGISTRATION */
-/* MAIN CONTAINER */
-.reg-container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-}
-
-/* LEFT SIDE (IMAGE) */
-.reg-left {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ffffff;
-}
-
-.reg-left img {
-  width: 60%;              
-  max-width: 350px;        
-  object-fit: contain;
-}
-
-/* RIGHT SIDE (FORM) */
-.reg-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;     
-  padding: 40px;
-  background: #f9f9fb;
-  overflow-y: auto;       
-}
-
-/* TITLE */
-.reg-right h2 {
-  margin-top: 100px;
-  margin-bottom: 15px;
-  font-size: 26px;
-  font-weight: 600;
-  color: #333;
-  
-}
-
-/* FORM */
-.reg-right form {
-  width: 100%;
-  max-width: 350px;       
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* INPUT FIELDS */
-.reg-right input {
-  padding: 14px 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  outline: none;
-  transition: 0.2s;
-  background: #ffffff;     
-  color: #333;
-}
-
-.reg-right input:focus {
-  border-color: #5f33e1;
-  box-shadow: 0 0 0 2px rgba(95, 51, 225, 0.1);
-}
-
-/* TERMS */
-.terms {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #555;
-}
-
-/* FULL CUSTOM CHECKBOX (guaranteed fix) */
-.terms input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-
-  width: 16px;
-  height: 16px;
-
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;   
-
-  cursor: pointer;
-  position: relative;
-}
-
-/* when checked */
-.terms input[type="checkbox"]:checked {
-  background-color: #5f33e1;
-  border-color: #5f33e1;
-}
-
-/* check mark */
-.terms input[type="checkbox"]:checked::after {
-  content: "✔";
-  color: white;
-  font-size: 12px;
-  position: absolute;
-  top: -1px;
-  left: 2px;
-}
-
-/* BUTTON */
-.reg-right button {
-  margin-top: 8px;
-  padding: 14px;
-  background: #5f33e1;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-  width: 60%;
-  align-self: center;
-}
-
-.auth-right button:hover {
-  background: #4c28b8;
-}
-
-/* SIGN IN TEXT */
-.reg-right p {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 12px;
-  color: #555;             
-}
-
-.link {
-  color: #5f33e1;
-  font-weight: 500;
-  cursor: pointer;
-}
 .input-group input {
-  width : 100%;
+  width : 80%;
   padding: 15px 15px 15px 45px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -297,13 +154,158 @@
   line-height: 1.5;
 }
 
+/* REGISTRATION */
+/* MAIN CONTAINER */
+.reg-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* LEFT SIDE (IMAGE) */
+.reg-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.reg-left img {
+  width: 60%;              
+  max-width: 350px;        
+  object-fit: contain;
+}
+
+/* RIGHT SIDE (FORM) */
+.reg-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;     
+  padding: 40px;
+  background: #f9f9fb;
+  overflow-y: auto;       
+}
+
+/* TITLE */
+.reg-right h2 {
+  margin-top: 100px;
+  margin-bottom: 15px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+  
+}
+
+/* FORM */
+.reg-right form {
+  width: 100%;
+  max-width: 350px;       
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* INPUT FIELDS */
+.reg-right input {
+  padding: 14px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+  background: #ffffff;     
+  color: #333;
+}
+
+.reg-right input:focus {
+  border-color: #5f33e1;
+  box-shadow: 0 0 0 2px rgba(95, 51, 225, 0.1);
+}
+
+/* TERMS */
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+/* FULL CUSTOM CHECKBOX (guaranteed fix) */
+.terms input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;   
+
+  cursor: pointer;
+  position: relative;
+}
+
+/* when checked */
+.terms input[type="checkbox"]:checked {
+  background-color: #5f33e1;
+  border-color: #5f33e1;
+}
+
+/* check mark */
+.terms input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: -1px;
+  left: 2px;
+}
+
+/* BUTTON */
+.reg-right button {
+  margin-top: 8px;
+  padding: 14px;
+  background: #5f33e1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 60%;
+  align-self: center;
+}
+
+.reg-right button:hover {
+  background: #4c28b8;
+}
+
+/* SIGN IN TEXT */
+.reg-right p {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 12px;
+  color: #555;             
+}
+
+.link {
+  color: #5f33e1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 /* landing page image */
 
 .dashboard-image {
   max-width: 80%;
   height: auto;
   border-radius: 16px;
-  box-shadow: 0px 10px 30px rgb(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
 }
 /*NAVIGATION*/
 /* Layout wrapper */

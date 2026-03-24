@@ -352,7 +352,26 @@
   list-style: none;
   padding: 0;
 }
+/* Make Link look like menu item */
+.menu li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  text-decoration: none;
+  width: 100%;
+}
 
+/* Hover effect */
+.menu li a:hover {
+  color: #fff;
+}
+
+/* Active link */
+.menu li a.active {
+  border-radius: 6px;
+  padding-left: 10px;
+}
 .menu li {
   display: flex;
   align-items: center;

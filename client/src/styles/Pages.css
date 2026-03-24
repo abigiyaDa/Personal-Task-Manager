@@ -1,0 +1,173 @@
+/* for dashboard */
+/* dashboard layout */
+.dashboard-container {
+  display: flex;
+}
+
+.dashboard-content {
+  padding: 20px;
+  width: 100%;
+  background: #f5f6fa;
+}
+/* Shared page layout */
+.page-content {
+  padding: 20px;
+  background: #f5f6fa;
+  min-height: 100vh;
+}
+
+/* Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+
+.left-panel, .right-panel {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Task Page */
+.task-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.task-list {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.task-item {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.task-item:hover {
+  background: #f1f2f6;
+}
+
+.task-details {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.task-details h2 {
+  font-weight: bold;
+}
+
+
+
+.category-btn {
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* task card */
+.task-card {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+
+
+
+/* Category Table Styling */
+.category-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid rgb(167, 167, 167);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.category-table th,
+.category-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #cfd4da;
+}
+
+.category-table th {
+  font-weight: bold;
+  color: #333;
+}
+.action-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.category-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Buttons */
+.edit-btn,
+.delete-btn {
+  background: #5f3dc4;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  background: #4c2db3;
+}

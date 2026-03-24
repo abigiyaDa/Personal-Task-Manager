@@ -1,15 +1,13 @@
 import Navbar from "../components/Navbar";
-import Calendar from "../components/Calendar";
-
-function Calandar() {
+import TaskForm from "../components/TaskForm";
+function AddTask() {
   // Add your component logic here (e.g., state, effects)
   
   return (
     <Navbar >
-      <p>ths is the calander </p>
-      <Calendar/>
+      <TaskForm />
     </Navbar>
   );
 }
 
-export default Calandar;
+export default AddTask;

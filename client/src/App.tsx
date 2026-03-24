@@ -4,10 +4,12 @@ import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import MyTask from "./pages/MyTask";
+import   AddTask  from "./pages/AddTask";
+import Calandar  from "./pages/Calendar";
 
 function App() {
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <Routes>
         {/* Landing page at root */}
         <Route path="/" element={<LandingPage />} />
@@ -23,8 +25,11 @@ function App() {
 
         {/* my tasks */}
         <Route path="/tasks" element={<MyTask />} />
+
+        <Route path="/add-task" element= {<AddTask />} />
+        < Route path="/calendar" element = {<Calandar/ >} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter>    
     
   );
 }

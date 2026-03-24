@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import MyTask from "./pages/MyTask";
 import   AddTask  from "./pages/AddTask";
 import Calandar  from "./pages/Calendar";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
         <Route path="/add-task" element= {<AddTask />} />
         < Route path="/calendar" element = {<Calandar/ >} />
+        < Route path="/settings" element = { <Settings /> } />
       </Routes>
     </BrowserRouter>    
     

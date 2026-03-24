@@ -68,7 +68,7 @@ const Navbar: React.FC<Props> = ({ children }) => {
           </div>
 
           <div className="top-icons">
-            <NavLink to='/calander'><FaCalendarAlt className="icon" /> </NavLink>
+            <NavLink to='/calendar'><FaCalendarAlt className="icon" /> </NavLink>
             <FaBell className="icon" />
             <span className="date">Tuesday 20/06/2023</span>
           </div>

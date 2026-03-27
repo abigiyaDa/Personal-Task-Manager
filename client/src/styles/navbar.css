@@ -9,10 +9,10 @@
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   width: 250px;
-  height: 100vh;        
+  height: calc(100vh - 60px);        
   background: #6a1b9a;
   color: #fff;
   display: flex;
@@ -100,7 +100,7 @@
 .topbar {
   position: fixed;
   top: 0;
-  left: 300px;           
+  /* left: 300px;            */
   right: 0;
   height: 60px;
   display: flex;

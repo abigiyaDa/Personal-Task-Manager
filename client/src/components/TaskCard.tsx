@@ -1,5 +1,6 @@
 import React from "react";
 import type { Task } from "../types/types";
+import "../styles/Pages.css"
 
 
 interface Props {
@@ -11,7 +12,7 @@ const TaskCard: React.FC<Props> = ({ task }) => {
     <div className="task-card">
       <div className="task-card-header">
         <h4>{task.title}</h4>
-        <span className="status">{task.status}</span>
+        <span className={`status ${task.status === "Completed" ? "completed" : "progress"}`}>{task.status}</span>
       </div>
       <p>{task.description}</p>
       <small>Due: {task.dueDate}</small>

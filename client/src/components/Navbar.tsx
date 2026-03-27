@@ -9,6 +9,15 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({ children }) => {
+  const today = new Date();
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  //format the : date dd/mm/yyyy
+  const dayName = days[today.getDay()]; // returns 0-6
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // month is 0-based
+  const year = today.getFullYear();
+
+  const formattedDate = `${dayName} ${day}/${month}/${year}`;
   return (
     <div className="dashboard-layout">
       {/* Sidebar */}
@@ -70,7 +79,7 @@ const Navbar: React.FC<Props> = ({ children }) => {
           <div className="top-icons">
             <NavLink to='/calendar'><FaCalendarAlt className="icon" /> </NavLink>
             <FaBell className="icon" />
-            <span className="date">Tuesday 20/06/2023</span>
+            <span className="date">{formattedDate}</span>
           </div>
         </div>
 

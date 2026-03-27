@@ -5,6 +5,7 @@ import TaskForm from "./TaskForm";
 import "../styles/Calendar.css";
 
 const formatDateKey = (year: number, month: number, day: number): string => {
+  // the format is 2023-03-27
   return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 };
 
@@ -27,6 +28,7 @@ const parseDueDateToKey = (dueDate: string, targetYear: number): string | null =
 };
 
 const groupTasksByDate = (tasks: Task[], year: number): Map<string, Task[]> => {
+  // groups tasks:  key - date , value - array of tasks for the days 
   const map = new Map<string, Task[]>();
   for (const task of tasks) {
     const key = parseDueDateToKey(task.dueDate, year);

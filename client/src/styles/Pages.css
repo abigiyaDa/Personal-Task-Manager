@@ -151,7 +151,7 @@
 /* Buttons */
 .edit-btn,
 .delete-btn {
-  background: #5f3dc4;
+  background: #6d28d9;
   color: white;
   border: none;
   padding: 8px 18px;
@@ -166,7 +166,7 @@
 
 .edit-btn:hover,
 .delete-btn:hover {
-  background: #4c2db3;
+  background: #6220cb;
 }
 
 /* Header */
@@ -178,7 +178,7 @@
 }
 
 .add-task-btn {
-  background: #6c5ce7;
+  background: #6d28d9;
   color: white;
   border: none;
   padding: 8px 14px;
@@ -188,7 +188,7 @@
 }
 
 .add-task-btn:hover {
-  background: #5a4bd6;
+  background: #6220cb;
 }
 
 /* Active task */

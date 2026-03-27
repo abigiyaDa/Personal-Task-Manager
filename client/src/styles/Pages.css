@@ -30,7 +30,6 @@
   padding: 20px;
   border-radius: 10px;
 }
-
 /* Task Page */
 .task-page {
   display: grid;
@@ -69,7 +68,7 @@
 
 
 .category-btn {
-  background: #6c5ce7;
+  background:#6d28d9;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -166,7 +165,7 @@
 
 .edit-btn:hover,
 .delete-btn:hover {
-  background: #6220cb;
+  background: #6d28d9;
 }
 
 /* Header */
@@ -188,12 +187,12 @@
 }
 
 .add-task-btn:hover {
-  background: #6220cb;
+  background: #6d28d9;
 }
 
 /* Active task */
 .task-item.active {
-  border: 2px solid #6c5ce7;
+  border: 2px solid #6d28d9;
   background: #f4f2ff;
 }
 

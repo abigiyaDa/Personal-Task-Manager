@@ -1,5 +1,5 @@
 import signInImage from "../assets/sign-in.png";
-import "../App.css";
+import "../styles/Login.css";
 import { FaUser,FaLock } from "react-icons/fa";
 
 export default function Login(){

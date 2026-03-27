@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import dashboardImage from '../assets/dashboard.png';
-
+import "../App.css";
 export default function LandingPage(){
   const navigate = useNavigate();
 

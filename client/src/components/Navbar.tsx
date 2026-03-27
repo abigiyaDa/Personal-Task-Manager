@@ -1,5 +1,5 @@
 import { FaUserCircle, FaTachometerAlt, FaTasks, FaPlus, FaCalendarAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaSearch, FaBell } from "react-icons/fa";
-import "../styles/Navbar.css";
+import "../styles/navbar.css";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 

@@ -105,3 +105,73 @@
   padding: 8px 15px;
   border-radius: 6px;
 }
+
+/* ========================= */
+/* Responsive Calendar */
+/* ========================= */
+
+/* Large screens (default) -> 4 columns */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-page h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .day-cell {
+    min-height: 50px;
+    font-size: 10px;
+  }
+
+  .day-number {
+    font-size: 11px;
+  }
+
+  .task-dot {
+    font-size: 9px;
+    padding: 1px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .calendar-page {
+    padding: 10px;
+  }
+
+  .month-header {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .weekdays div {
+    font-size: 10px;
+    padding: 3px;
+  }
+
+  .day-cell {
+    min-height: 40px;
+    padding: 2px;
+  }
+
+  .calendar-modal-content {
+    width: 95%;
+  }
+}

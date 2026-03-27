@@ -1,3 +1,11 @@
+
+* {
+  box-sizing: border-box;
+}
+
+img, canvas, svg {
+  max-width: 100%;
+}
 /* for dashboard */
 /* dashboard layout */
 .dashboard-container {
@@ -30,6 +38,75 @@
   padding: 20px;
   border-radius: 10px;
 }
+/* Tablet */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-page {
+    grid-template-columns: 1fr;
+  }
+}
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard-content,
+  .page-content {
+    padding: 10px;
+  }
+
+  .left-panel,
+  .right-panel,
+  .task-list,
+  .task-details {
+    padding: 15px;
+  }
+
+  .category-btn,
+  .add-task-btn,
+  .complete-btn {
+    width: 100%;
+  }
+
+  .task-meta {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .task-buttons {
+    flex-direction: column;
+  }
+
+  .modal {
+    width: 90%;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .category-table th,
+  .category-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+
 /* Task Page */
 .task-page {
   display: grid;

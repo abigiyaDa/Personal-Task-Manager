@@ -1,6 +1,6 @@
 // components/CategoryModal.tsx
 import React, { useState } from "react";
-
+import "../styles/categoryModal.css";
 interface Props {
   isOpen: boolean;
   onClose: () => void;

@@ -2,6 +2,8 @@ import { FaUserCircle, FaTachometerAlt, FaTasks, FaPlus, FaCalendarAlt, FaCog, F
 import "../styles/navbar.css";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import React, { useState } from "react"; // 👈 add this
 
 
 interface Props {
@@ -17,11 +19,16 @@ const Navbar: React.FC<Props> = ({ children }) => {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // month is 0-based
   const year = today.getFullYear();
 
+
+  // toggle 
+  const [isOpen, setIsOpen] = useState(true);
+
+
   const formattedDate = `${dayName} ${day}/${month}/${year}`;
   return (
     <div className="dashboard-layout">
       {/* Sidebar */}
-      <div className="sidebar">
+      <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
         <div className="profile">
           <FaUserCircle className="profile-icon" />   
           <h3>amanuel</h3>
@@ -68,9 +75,12 @@ const Navbar: React.FC<Props> = ({ children }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="main-content">
+      <div className={`main-content ${isOpen ? "shifted" : "full"}`}>
         {/* Topbar */}
         <div className="topbar">
+          <button className="menu-toggle" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
           <div className="search-box">
             <FaSearch className="icon" />
             <input type="text" placeholder="Search your task here..." />

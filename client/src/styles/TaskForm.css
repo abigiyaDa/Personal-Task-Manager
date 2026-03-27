@@ -53,7 +53,7 @@
 .form-field textarea:focus,
 .form-field select:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: #7c3aed;
 }
 
 .form-field textarea {
@@ -84,17 +84,20 @@
   width: auto;
   margin: 0;
   cursor: pointer;
+  accent-color: #7c3aed;
 }
 
 .priority-option.selected span {
-  color: #4a90e2;
+  color: #7c3aed;
   font-weight: 600;
 }
 
 .submit-btn {
-  width: 100%;
+  width: 120px;
+  margin:20px auto;
+  display: block;
   padding: 0.75rem;
-  background: #4a90e2;
+  background: #7c3aed;
   color: white;
   border: none;
   border-radius: 6px;
@@ -106,7 +109,7 @@
 }
 
 .submit-btn:hover {
-  background: #357abd;
+  background: #7c3aed;
 }
 
 /* Responsive design */

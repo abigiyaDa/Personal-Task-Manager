@@ -8,12 +8,17 @@
 
 /* Sidebar */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 250px;
-  background: #6a1b9a; /* purple */
+  height: 100vh;        
+  background: #6a1b9a;
   color: #fff;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  z-index: 1000;        
 }
 
 .profile {
@@ -79,20 +84,32 @@
 
 /* Main Content */
 .main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  margin-left: 250px;    
+  margin-top: 60px;      
+  padding: 1.5rem;
+  width: calc(100% - 250px); 
+  height: calc(100vh - 60px); 
+  overflow-y: auto;      
   background: #f9f9f9;
+}
+.main-content::-webkit-scrollbar {
+  display: none; 
 }
 
 /* Topbar */
 .topbar {
+  position: fixed;
+  top: 0;
+  left: 300px;           
+  right: 0;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
   background: #fff;
   border-bottom: 1px solid #eee;
+  z-index: 1000;
 }
 
 .search-box {
@@ -130,7 +147,7 @@
 }
 
 .top-icons .icon:hover {
-  color: #6a1b9a; /* purple highlight */
+  color: #6a1b9a; 
 }
 
 .date {

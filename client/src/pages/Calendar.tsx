@@ -6,7 +6,6 @@ function Calandar() {
   
   return (
     <Navbar >
-      <p>ths is the calander </p>
       <Calendar/>
     </Navbar>
   );

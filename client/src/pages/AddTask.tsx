@@ -1,11 +1,13 @@
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import TaskForm from "../components/TaskForm";
 function AddTask() {
-  // Add your component logic here (e.g., state, effects)
-  
+  const location = useLocation();
+  const task = location.state?.task;
+
   return (
-    <Navbar >
-      <TaskForm />
+    <Navbar>
+      <TaskForm initialData={task} />
     </Navbar>
   );
 }

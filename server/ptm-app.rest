@@ -1,9 +1,6 @@
 @baseUrl = http://localhost:5000
 @token = Bearer your_jwt_token_here
 
-@baseUrl = http://localhost:5000
-@token = Bearer your_jwt_token_here
-
 ### Health Check
 GET {{baseUrl}}/
 

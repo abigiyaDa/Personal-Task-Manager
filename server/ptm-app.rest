@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:5000
+@token = Bearer your_jwt_token_here
+
+@baseUrl = http://localhost:5000
+@token = Bearer your_jwt_token_here
+
+### Health Check
+GET {{baseUrl}}/
+
+### Register User
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Test User",
+  "email": "test@gmail.com",
+  "password": "123456",
+  "confirmPassword": "123456"
+}
+
+### Login User
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "123456"
+}

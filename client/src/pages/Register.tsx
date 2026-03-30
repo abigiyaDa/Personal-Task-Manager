@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     username: "",
     email: "",
     password: "",
@@ -38,15 +37,8 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="firstName"
-            placeholder="Enter First Name"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Enter Last Name"
+            name="fullName"
+            placeholder="Enter Full Name"
             onChange={handleChange}
           />
 

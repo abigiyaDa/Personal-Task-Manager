@@ -10,7 +10,7 @@ export default function Login(){
 
                 <div className="input-group">
                     <FaUser className="input-icon"></FaUser>
-                    <input type="text" placeholder="Enter Username"/>
+                    <input type="email" placeholder="Enter Email"/>
                 </div>
 
                 <div className="input-group">

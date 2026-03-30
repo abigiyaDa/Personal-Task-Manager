@@ -51,13 +51,6 @@ const Register = () => {
           />
 
           <input
-            type="text"
-            name="username"
-            placeholder="Enter Username"
-            onChange={handleChange}
-          />
-
-          <input
             type="email"
             name="email"
             placeholder="Enter Email"

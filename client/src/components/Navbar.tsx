@@ -3,8 +3,7 @@ import "../styles/navbar.css";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import React, { useState } from "react"; // 👈 add this
-
+import React, { useState } from "react";
 
 interface Props {
   children: ReactNode;
@@ -13,24 +12,28 @@ interface Props {
 const Navbar: React.FC<Props> = ({ children }) => {
   const today = new Date();
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  //format the : date dd/mm/yyyy
-  const dayName = days[today.getDay()]; // returns 0-6
+  const dayName = days[today.getDay()];
   const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // month is 0-based
+  const month = String(today.getMonth() + 1).padStart(2, "0");
   const year = today.getFullYear();
 
-
-  // toggle 
   const [isOpen, setIsOpen] = useState(true);
 
-
   const formattedDate = `${dayName} ${day}/${month}/${year}`;
+
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // remove token
+    localStorage.removeItem("user");  // remove stored user info (optional)
+    window.location.href = "/login";  // redirect to login page
+  };
+
   return (
     <div className="dashboard-layout">
       {/* Sidebar */}
       <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
         <div className="profile">
-          <FaUserCircle className="profile-icon" />   
+          <FaUserCircle className="profile-icon" />
           <h3>amanuel</h3>
           <p>amanuel@gmail.com</p>
         </div>
@@ -67,9 +70,10 @@ const Navbar: React.FC<Props> = ({ children }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/logout">
+            {/* ✅ Logout button */}
+            <button className="logout-btn" onClick={handleLogout}>
               <FaSignOutAlt /> Logout
-            </NavLink>
+            </button>
           </li>
         </ul>
       </div>
@@ -87,16 +91,16 @@ const Navbar: React.FC<Props> = ({ children }) => {
           </div>
 
           <div className="top-icons">
-            <NavLink to='/calendar'><FaCalendarAlt className="icon" /> </NavLink>
+            <NavLink to="/calendar">
+              <FaCalendarAlt className="icon" />
+            </NavLink>
             <FaBell className="icon" />
             <span className="date">{formattedDate}</span>
           </div>
         </div>
 
-        {/* THIS IS WHERE DASHBOARD GOES */}
-        <div className="page-content">
-          {children}
-        </div>
+        {/* Page content */}
+        <div className="page-content">{children}</div>
       </div>
     </div>
   );

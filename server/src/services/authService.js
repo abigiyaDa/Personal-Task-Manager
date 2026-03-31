@@ -26,12 +26,12 @@ export const loginUser = async (data) => {
 
   const user = await findUserByEmail(email);
   if (!user) {
-    throw new Error("Invalid email or password");
+    throw new Error("Invalid email");
   }
 
   const isMatch = await comparePassword(password, user.password);
   if (!isMatch) {
-    throw new Error("Invalid email or password");
+    throw new Error("Invalid password");
   }
 
   const token = generateToken(user);

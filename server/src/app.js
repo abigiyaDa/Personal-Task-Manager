@@ -4,7 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import { errorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
-
+// Enable CORS for all routes to allow cross-origin requests from the frontend application  
 app.use(cors());
 app.use(express.json());
 

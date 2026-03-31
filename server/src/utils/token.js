@@ -1,3 +1,4 @@
+// Utility function to generate JWT tokens for authenticated users.
 import jwt from "jsonwebtoken";
 
 export const generateToken = (user) => {

@@ -1,3 +1,5 @@
+// business logic - handles validation, password hashing, and token generation for user registration and login
+
 import { createUser, findUserByEmail } from "../repositories/userRepository.js";
 import { hashPassword, comparePassword } from "../utils/passwordHasher.js";
 import { generateToken } from "../utils/token.js";
@@ -9,10 +11,11 @@ export const registerUser = async (data) => {
   const { fullName, email, password } = data;
 
   const existingUser = await findUserByEmail(email);
+  // Check if user with the same email already exists
   if (existingUser) {
     throw new Error("Email already exists");
   }
-
+  // Hash the password before storing it in the database for security reasons 
   const hashedPassword = await hashPassword(password);
   await createUser(fullName, email, hashedPassword);
 
@@ -28,7 +31,7 @@ export const loginUser = async (data) => {
   if (!user) {
     throw new Error("Invalid email");
   }
-
+  // Compare the provided password with the hashed password stored in the database using bcrypt's compare function
   const isMatch = await comparePassword(password, user.password);
   if (!isMatch) {
     throw new Error("Invalid password");

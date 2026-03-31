@@ -1,3 +1,5 @@
+// Utility functions for hashing and comparing passwords using bcrypt.
+
 import bcrypt from "bcrypt";
 
 export const hashPassword = async (password) => {

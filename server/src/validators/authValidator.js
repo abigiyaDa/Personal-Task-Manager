@@ -1,3 +1,6 @@
+// input validation for registration and login requests.
+// prevents bad data from reaching the controllers and causing errors or security issues.
+
 export const validateRegister = (data) => {
   const { fullName, email, password, confirmPassword } = data;
 

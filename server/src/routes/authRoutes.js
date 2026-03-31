@@ -1,3 +1,6 @@
+// API endpoints for user registration and login.
+// Defines URLs 
+
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 

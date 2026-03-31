@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import illustration from "../assets/sign-up.png";
 import "../styles/register.css";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../api/authApi"; // import API helper
+import API from "../api/authApi"; 
 
 const Register = () => {
   const navigate = useNavigate();
@@ -30,9 +30,10 @@ const Register = () => {
 
     try {
       const res = await API.post("/auth/register", {
-        name: form.fullName,
+        fullName: form.fullName,
         email: form.email,
         password: form.password,
+        confirmPassword: form.confirmPassword,
       });
 
       alert("Registration successful!");

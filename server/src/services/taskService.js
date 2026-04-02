@@ -13,11 +13,15 @@ export const createTask = async (data, user) => {
 
   const task = {
     title: data.title,
-    description: data.description,
-    priority: data.priority,
-    due_date: data.due_date,
+    description: data.description || null,
+    priority: data.priority || "Medium",
+    due_date: data.due_date || null,
     user_id: user.id,
   };
+
+  if (!task.user_id) {
+    throw new Error("User not authenticated");
+  }
 
   await createTaskRepo(task);
 

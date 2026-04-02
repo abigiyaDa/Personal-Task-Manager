@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:5000
-@token = Bearer your_jwt_token_here
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTc3NTEzMDcxOSwiZXhwIjoxNzc1MjE3MTE5fQ.4RsU5RcYFATtybqxIvc9ZMbi41Or8DCi8PH7SIG_ksM
 
 ### Health Check
 GET {{baseUrl}}/
@@ -23,3 +23,42 @@ Content-Type: application/json
   "email": "test@gmail.com",
   "password": "123456"
 }
+
+
+### Create Task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Finish Backend",
+  "description": "Complete task API",
+  "priority": "High",
+  "due_date": "2026-04-10"
+}
+
+### Get All Tasks
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
+
+### Get Task by ID
+GET {{baseUrl}}/tasks/1
+Authorization: Bearer {{token}}
+
+### Update Task
+PUT {{baseUrl}}/tasks/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Finish Backend API",
+  "description": "Complete task API with all endpoints",
+  "priority": "High",
+  "due_date": "2026-04-15",
+  "status": "In Progress"
+}
+
+### Delete Task
+DELETE {{baseUrl}}/tasks/2
+Authorization: Bearer {{token}}
+

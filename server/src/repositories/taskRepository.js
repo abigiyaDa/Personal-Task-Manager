@@ -35,7 +35,7 @@ export const updateTaskRepo = async (task_id, user_id, task) => {
     `UPDATE Task
      SET title=?, description=?, priority=?, due_date=?, status=?
      WHERE task_id=? AND user_id=?`,
-    [title, description, priority, due_date, status, task_id, user_id]
+    [title ?? null, description ?? null, priority ?? null, due_date ?? null, status ?? null, task_id, user_id]
   );
 
   return result;

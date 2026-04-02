@@ -62,3 +62,33 @@ Authorization: Bearer {{token}}
 DELETE {{baseUrl}}/tasks/2
 Authorization: Bearer {{token}}
 
+### create category
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Work"
+}
+
+### get all categories
+GET {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+
+### get category by id
+GET {{baseUrl}}/categories/1
+Authorization: Bearer {{token}}
+
+### update category
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Work Projects"
+} 
+
+### delete category
+DELETE {{baseUrl}}/categories/1
+Authorization: Bearer {{token}}
+

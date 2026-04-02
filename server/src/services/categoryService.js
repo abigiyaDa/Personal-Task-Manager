@@ -3,6 +3,7 @@ import {
   getCategoriesRepo,
   updateCategoryRepo,
   deleteCategoryRepo,
+  getCategoryByIdRepo,
 } from "../repositories/categoryRepository.js";
 
 export const createCategory = async (data, user) => {
@@ -38,4 +39,12 @@ export const deleteCategory = async (id, user) => {
   }
 
   return { message: "Category deleted successfully" };
+};
+
+// get category by id
+
+export const getCategoryById = async (id, user) => {
+  const category = await getCategoryByIdRepo(id, user.id);
+  if (!category) throw new Error("Category not found");
+  return category;
 };

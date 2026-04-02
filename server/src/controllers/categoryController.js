@@ -3,6 +3,7 @@ import {
   getCategories,
   updateCategory,
   deleteCategory,
+  getCategoryById,
 } from "../services/categoryService.js";
 
 export const createCategoryController = async (req, res, next) => {
@@ -40,3 +41,13 @@ export const deleteCategoryController = async (req, res, next) => {
     next(error);
   }
 };
+
+// get category by id
+export const getCategoryByIdController = async (req, res, next) => {
+  try {
+    const category = await getCategoryById(req.params.id, req.user);
+    res.status(200).json(category);
+  } catch (error) {
+    next(error);
+  }
+};  

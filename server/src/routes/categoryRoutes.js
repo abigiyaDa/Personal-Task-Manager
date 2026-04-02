@@ -4,6 +4,7 @@ import {
   getCategoriesController,
   updateCategoryController,
   deleteCategoryController,
+  getCategoryByIdController,
 } from "../controllers/categoryController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -14,6 +15,8 @@ router.use(protect);
 
 router.post("/", createCategoryController);
 router.get("/", getCategoriesController);
+// get category by id
+router.get("/:id", getCategoryByIdController);
 router.put("/:id", updateCategoryController);
 router.delete("/:id", deleteCategoryController);
 

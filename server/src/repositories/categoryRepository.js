@@ -31,3 +31,12 @@ export const deleteCategoryRepo = async (category_id, user_id) => {
   );
   return result;
 };
+
+// get category by id
+export const getCategoryByIdRepo = async (category_id, user_id) => {
+  const [rows] = await db.execute(
+    "SELECT * FROM Category WHERE category_id=? AND user_id=?",
+    [category_id, user_id]
+  );
+  return rows[0]; // returns single category or undefined
+};

@@ -1,29 +1,61 @@
-// pages/Dashboard.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import TaskCard from "../components/TaskCard";
 import CategoryModal from "../components/CategoryModal";
 import CategoryList from "../components/CategoryList";
 import TaskPieChart from "../components/TaskPieChart";
+
+import { getTasks } from "../api/taskApi";
+import {
+  getCategories,
+  createCategory,
+  deleteCategory as deleteCategoryApi,
+} from "../api/categoryApi";
+
 import type { Category, Task } from "../types/types";
-import { tasks as dummyTasks, categories as dummyCategories } from "../data/dummyData";
 
 const Dashboard: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>(dummyCategories);
-const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
-  const [showModal, setShowModal] = useState<boolean>(false);
+  // ✅ LOAD DATA
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const addCategory = (name: string) => {
-    const newCategory: Category = {
-      id: Date.now(),
-      name,
-    };
-    setCategories([...categories, newCategory]);
+  const fetchData = async () => {
+    try {
+      const [taskData, categoryData] = await Promise.all([
+        getTasks(),
+        getCategories(),
+      ]);
+
+      setTasks(taskData);
+      setCategories(categoryData);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const deleteCategory = (id: number) => {
-    setCategories(categories.filter((cat) => cat.id !== id));
+  // ✅ CREATE CATEGORY
+  const addCategory = async (name: string) => {
+    try {
+      const newCat = await createCategory(name);
+      setCategories([...categories, newCat]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ✅ DELETE CATEGORY
+  const deleteCategory = async (id: number) => {
+    try {
+      await deleteCategoryApi(id);
+      setCategories(categories.filter((cat) => cat.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const completedCount = tasks.filter((t) => t.status === "Completed").length;
@@ -32,7 +64,7 @@ const [tasks, setTasks] = useState<Task[]>(dummyTasks);
   return (
     <Navbar>
       <div className="dashboard-content">
-        <h2>Welcome back, Amanuel 👋</h2>
+        <h2>Welcome back 👋</h2>
 
         <div className="dashboard-grid">
           {/* LEFT */}

@@ -1,47 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { tasks as dummyTasks } from "../data/dummyData";
 import "../styles/Pages.css";
 import type { Task } from "../types/types";
 
+import {
+  getTasks,
+  updateTask,
+} from "../api/taskApi";
+
 const MyTask: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
-  const [selectedTask, setSelectedTask] = useState<Task>(tasks[0]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const navigate = useNavigate();
 
-  const toggleCompleted = () => {
-  const updatedTasks = tasks.map((task): Task => {
-      if (task.id === selectedTask.id) {
-        return {
-          ...task,
-          status: task.status === "Completed" ? "In Progress" : "Completed",
-        };
-      }
-      return task;
-    });
+  // ✅ FETCH TASKS
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
-    const updatedSelectedTask: Task = {
-      ...selectedTask,
-      status:
-        selectedTask.status === "Completed"
-          ? "In Progress"
-          : "Completed",
-    };
+  const fetchTasks = async () => {
+    try {
+      const data = await getTasks();
+      setTasks(data);
+      if (data.length > 0) setSelectedTask(data[0]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  setTasks(updatedTasks);
-  setSelectedTask(updatedSelectedTask);
-};
+  // ✅ TOGGLE STATUS (API)
+  const toggleCompleted = async () => {
+    if (!selectedTask) return;
+
+    const newStatus =
+      selectedTask.status === "Completed"
+        ? "In Progress"
+        : "Completed";
+
+    try {
+      await updateTask(selectedTask.id, { status: newStatus });
+      fetchTasks();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const goToEdit = () => {
+    if (!selectedTask) return;
     navigate("/add-task", { state: { task: selectedTask } });
   };
+
+  if (!selectedTask) return <p>Loading...</p>;
 
   return (
     <Navbar>
       <div className="task-page">
-
-        {/* LEFT - Task List */}
+        {/* LEFT */}
         <div className="task-list">
           <div className="task-list-header">
             <h3>My Tasks</h3>
@@ -56,7 +71,9 @@ const MyTask: React.FC = () => {
           {tasks.map((task) => (
             <div
               key={task.id}
-              className={`task-item ${task.id === selectedTask.id ? "active" : ""}`}
+              className={`task-item ${
+                task.id === selectedTask.id ? "active" : ""
+              }`}
               onClick={() => setSelectedTask(task)}
             >
               <h4>{task.title}</h4>
@@ -65,7 +82,13 @@ const MyTask: React.FC = () => {
                 <span className={`priority ${task.priority.toLowerCase()}`}>
                   {task.priority}
                 </span>
-                <span className={`status ${task.status === "Completed" ? "completed" : "progress"}`}>
+                <span
+                  className={`status ${
+                    task.status === "Completed"
+                      ? "completed"
+                      : "progress"
+                  }`}
+                >
                   {task.status}
                 </span>
               </div>
@@ -73,19 +96,21 @@ const MyTask: React.FC = () => {
           ))}
         </div>
 
-        {/* RIGHT - Task Details */}
+        {/* RIGHT */}
         <div className="task-details">
           <h2>{selectedTask.title}</h2>
           <p><strong>Priority:</strong> {selectedTask.priority}</p>
           <p><strong>Status:</strong> {selectedTask.status}</p>
-          <p><strong>Created on:</strong> {selectedTask.createdAt}</p>
           <p><strong>Description:</strong> {selectedTask.description}</p>
           <p><strong>Due Date:</strong> {selectedTask.dueDate}</p>
 
           <div className="task-buttons">
             <button className="complete-btn" onClick={toggleCompleted}>
-              {selectedTask.status === "Completed" ? "Undo" : "Mark Completed"}
+              {selectedTask.status === "Completed"
+                ? "Undo"
+                : "Mark Completed"}
             </button>
+
             <button className="edit-btn" onClick={goToEdit}>
               Edit Task
             </button>

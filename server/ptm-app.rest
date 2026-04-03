@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:5000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTc3NTEzMDcxOSwiZXhwIjoxNzc1MjE3MTE5fQ.4RsU5RcYFATtybqxIvc9ZMbi41Or8DCi8PH7SIG_ksM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTc3NTIwNjAzNywiZXhwIjoxNzc1MjkyNDM3fQ.R1whVLDF2O8KBMA1gsqZnZU8P_gh66L1za4LJ3lvB_c
 
 ### Health Check
 GET {{baseUrl}}/

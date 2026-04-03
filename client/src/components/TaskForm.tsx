@@ -5,11 +5,10 @@ import '../styles/TaskForm.css'; // Import the CSS file
 
 interface TaskFormData {
   title: string;
-  date: string;
-  priority: 'Extreme' | 'Moderate' | 'Low';
-  category: string;
-  option: string;
   description: string;
+  priority: 'Extreme' | 'Moderate' | 'Low';
+  due_date: string;
+  category?: string;
 }
 
 interface TaskFormProps {
@@ -20,11 +19,11 @@ interface TaskFormProps {
 const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState<TaskFormData>({
     title: initialData?.title || '',
-    date: initialData?.date || '',
-    priority: initialData?.priority || 'Moderate',
-    category: initialData?.category || '',
-    option: initialData?.option || '',
     description: initialData?.description || '',
+    priority: initialData?.priority || 'Moderate',
+    due_date: initialData?.due_date || '',
+    category: initialData?.category || '',
+    
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -66,8 +65,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
           <input
             type="date"
             id="date"
-            name="date"
-            value={formData.date}
+            name="due_date"
+            value={formData.due_date}
             onChange={handleChange}
           />
         </div>
@@ -105,7 +104,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
         </div>
       </div>
 
-      <div className="form-group">
+     <div className="form-group">
         <label htmlFor="category">Category</label>
         <div className="form-field">
           <input
@@ -119,19 +118,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
         </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="option">Option</label>
-        <div className="form-field">
-          <input
-            type="text"
-            id="option"
-            name="option"
-            value={formData.option}
-            onChange={handleChange}
-            placeholder="Enter option"
-          />
-        </div>
-      </div>
+
 
       <div className="form-group">
         <label htmlFor="description">Task Description</label>
@@ -147,7 +134,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
         </div>
       </div>
 
-      <button type="submit" className="submit-btn">Done</button>
+      <button type="submit" className="submit-btn">Create Task</button>
     </form>
   );
 };

@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/Settings.css";
 
 function Settings() {
   const [nightMode, setNightMode] = useState(false);
   const [user, setUser] = useState({
-    name: "amanuel",
-    email: "amanuel@email.com",
-    username: "abigu123",
+    name: "",
+    email: "",
+    username: "",
   });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser({
+        name: parsedUser.name,
+        email: parsedUser.email,
+        username: parsedUser.name, // or create username in DB later
+      });
+    }
+  }, []);
 
   return (
     <Navbar>

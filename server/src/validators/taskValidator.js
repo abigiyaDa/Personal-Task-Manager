@@ -1,9 +1,9 @@
 export const validateTask = (data) => {
   const { title, priority, due_date } = data;
 
-  if (!title) throw new Error("Title is required");
+  if (title !== undefined && !title) throw new Error("Title is required");
 
-  if (title.length > 100) {
+  if (title && title.length > 100) {
     throw new Error("Title must be less than 100 characters");
   }
 

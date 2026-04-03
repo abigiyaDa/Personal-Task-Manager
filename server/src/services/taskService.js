@@ -23,14 +23,31 @@ export const createTask = async (data, user) => {
     throw new Error("User not authenticated");
   }
 
-  await createTaskRepo(task);
+  const result = await createTaskRepo(task);
 
-  return { message: "Task created successfully" };
+  // Return the created task
+  return {
+    id: result.insertId,
+    title: task.title,
+    description: task.description,
+    status: "In Progress", // assuming default
+    priority: task.priority,
+    createdAt: new Date().toISOString(),
+    dueDate: task.due_date
+  };
 };
 
 export const getAllTasks = async (user) => {
   const tasks = await getAllTasksRepo(user.id);
-  return tasks;
+  return tasks.map(task => ({
+    id: task.task_id,
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    priority: task.priority,
+    createdAt: task.created_at,
+    dueDate: task.due_date
+  }));
 };
 
 export const getTaskById = async (task_id, user) => {
@@ -38,7 +55,15 @@ export const getTaskById = async (task_id, user) => {
 
   if (!task) throw new Error("Task not found");
 
-  return task;
+  return {
+    id: task.task_id,
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    priority: task.priority,
+    createdAt: task.created_at,
+    dueDate: task.due_date
+  };
 };
 
 export const updateTask = async (task_id, data, user) => {

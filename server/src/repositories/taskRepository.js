@@ -31,12 +31,37 @@ export const getTaskByIdRepo = async (task_id, user_id) => {
 export const updateTaskRepo = async (task_id, user_id, task) => {
   const { title, description, priority, due_date, status } = task;
 
-  const [result] = await db.execute(
-    `UPDATE Task
-     SET title=?, description=?, priority=?, due_date=?, status=?
-     WHERE task_id=? AND user_id=?`,
-    [title ?? null, description ?? null, priority ?? null, due_date ?? null, status ?? null, task_id, user_id]
-  );
+  let query = "UPDATE Task SET ";
+  const values = [];
+  const updates = [];
+
+  if (title !== undefined) {
+    updates.push("title=?");
+    values.push(title);
+  }
+  if (description !== undefined) {
+    updates.push("description=?");
+    values.push(description);
+  }
+  if (priority !== undefined) {
+    updates.push("priority=?");
+    values.push(priority);
+  }
+  if (due_date !== undefined) {
+    updates.push("due_date=?");
+    values.push(due_date);
+  }
+  if (status !== undefined) {
+    updates.push("status=?");
+    values.push(status);
+  }
+
+  if (updates.length === 0) return { affectedRows: 0 };
+
+  query += updates.join(", ") + " WHERE task_id=? AND user_id=?";
+  values.push(task_id, user_id);
+
+  const [result] = await db.execute(query, values);
 
   return result;
 };

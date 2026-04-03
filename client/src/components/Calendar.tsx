@@ -2,25 +2,25 @@ import React, { useMemo, useState, useEffect } from "react";
 import TaskForm from "./TaskForm";
 import type { Task } from "../types/types";
 import "../styles/Calendar.css";
-import { getTasks, updateTask } from "../api/taskApi"; // API functions
+import { getTasks, updateTask, createTask } from "../api/taskApi";
 
 // Format a date as YYYY-MM-DD
 const formatDateKey = (year: number, month: number, day: number): string => {
-  return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(
-    2,
-    "0"
-  )}`;
+  return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 };
 
 // Convert task.dueDate to a date key
 const parseDueDateToKey = (dueDate: string, targetYear: number): string | null => {
   if (!dueDate) return null;
-
   const dateObj = new Date(dueDate);
   if (isNaN(dateObj.getTime())) return null;
 
   if (dateObj.getFullYear() === targetYear) {
-    return formatDateKey(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+    return formatDateKey(
+      dateObj.getFullYear(),
+      dateObj.getMonth(),
+      dateObj.getDate()
+    );
   }
   return null;
 };
@@ -114,42 +114,61 @@ const Calendar: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
+  const [showForm, setShowForm] = useState(false);
 
-  // Fetch tasks from backend
+  // Fetch tasks
+  const fetchTasks = async () => {
+    try {
+      const data = await getTasks();
+      setTasks(data);
+    } catch (error) {
+      console.error("Failed to fetch tasks:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-      } catch (error) {
-        console.error("Failed to fetch tasks:", error);
-      }
-    };
     fetchTasks();
   }, []);
 
-  // Group tasks by date
-  const tasksByDate = useMemo(() => groupTasksByDate(tasks, currentYear), [tasks, currentYear]);
+  const tasksByDate = useMemo(
+    () => groupTasksByDate(tasks, currentYear),
+    [tasks, currentYear]
+  );
 
   const handleDateClick = (dateKey: string, tasks: Task[]) => {
     setSelectedDate(dateKey);
     setSelectedTasks(tasks);
+    setShowForm(false);
   };
 
   const toggleTaskStatus = async (task: Task) => {
     const newStatus = task.status === "Completed" ? "In Progress" : "Completed";
     try {
       await updateTask(task.id, { status: newStatus });
-      const updatedTasks = await getTasks(); // Refresh tasks
-      setTasks(updatedTasks);
-      if (selectedDate) {
-        const tasksForDate = updatedTasks.filter(
-          (t) => parseDueDateToKey(t.dueDate, currentYear) === selectedDate
-        );
-        setSelectedTasks(tasksForDate);
-      }
+      await fetchTasks();
     } catch (err) {
       console.error("Failed to update task status:", err);
+    }
+  };
+
+  const handleCreateTask = async (data: any) => {
+    try {
+      await createTask({
+        ...data,
+        due_date: selectedDate,
+      });
+
+      await fetchTasks();
+
+      const updated = await getTasks();
+      const tasksForDate = updated.filter(
+        (t) => parseDueDateToKey(t.dueDate, currentYear) === selectedDate
+      );
+      setSelectedTasks(tasksForDate);
+
+      setShowForm(false);
+    } catch (err) {
+      console.error("Failed to create task:", err);
     }
   };
 
@@ -190,10 +209,31 @@ const Calendar: React.FC = () => {
               ))
             )}
 
-            <h3>Create New Task</h3>
-            <TaskForm initialData={{ date: selectedDate }} />
+            {/* CREATE TASK BUTTON */}
+            {!showForm ? (
+              <button
+                className="add-task-btn"
+                onClick={() => setShowForm(true)}
+              >
+                + Create Task
+              </button>
+            ) : (
+              <>
+                <h3>Create New Task</h3>
+                <TaskForm
+                  onSubmit={handleCreateTask}
+                  initialData={{ due_date: selectedDate }}
+                />
+              </>
+            )}
 
-            <button onClick={() => setSelectedDate(null)} className="close-btn">
+            <button
+              onClick={() => {
+                setSelectedDate(null);
+                setShowForm(false);
+              }}
+              className="close-btn"
+            >
               Close
             </button>
           </div>

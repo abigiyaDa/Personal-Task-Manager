@@ -19,8 +19,8 @@ app.use("/api/auth", authRoutes);
 // error handler
 app.use(errorHandler);
 
-app.use("/tasks", taskRoutes);
+app.use("/api/tasks", taskRoutes);
 
-app.use("/categories", categoryRoutes);
+app.use("/api/categories", categoryRoutes);
 
 export default app;

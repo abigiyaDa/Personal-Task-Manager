@@ -1,7 +1,7 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
 import { createTask, updateTask } from "../api/taskApi";
+import Navbar from "../components/Navbar";
 
 const AddTask = () => {
   const location = useLocation();
@@ -28,7 +28,8 @@ const AddTask = () => {
   };
 
   return (
-    <TaskForm
+    <Navbar>
+      <TaskForm
       onSubmit={handleSubmit}
       initialData={
         task
@@ -41,6 +42,8 @@ const AddTask = () => {
           : undefined
       }
     />
+    </Navbar>
+    
   );
 };
 

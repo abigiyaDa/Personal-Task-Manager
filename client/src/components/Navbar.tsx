@@ -32,11 +32,11 @@ const Navbar: React.FC<Props> = ({ children }) => {
     <div className="dashboard-layout">
       {/* Sidebar */}
       <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
-        <div className="profile">
-          <FaUserCircle className="profile-icon" />
-          <h3>amanuel</h3>
-          <p>amanuel@gmail.com</p>
-        </div>
+       <div className="profile">
+  <FaUserCircle className="profile-icon" />
+  <h3>{localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).name : "User"}</h3>
+  <p>{localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).email : "user@example.com"}</p>
+</div>
 
         <ul className="menu">
           <li>

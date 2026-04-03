@@ -14,7 +14,7 @@ export const createTask = async (data, user) => {
   const task = {
     title: data.title,
     description: data.description || null,
-    priority: data.priority || "Medium",
+    priority: data.priority || "Moderate",
     due_date: data.due_date || null,
     user_id: user.id,
   };

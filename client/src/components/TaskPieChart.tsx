@@ -15,9 +15,11 @@ const TaskPieChart: React.FC<Props> = ({ completed, inProgress }) => {
   ];
 
   const progressData = [
-    { name: "In Progress", value: inProgress },
+    { name: "In Progress" , value: inProgress },
     { name: "Remaining", value: total - inProgress },
   ];
+  const completedPercent = total === 0 ? 0 : Math.round((completed / total) * 100);
+  const progressPercent = total === 0 ? 0 : Math.round((inProgress / total) * 100);
 
   return (
     <div style={{ display: "flex", gap: "40px" }}>
@@ -30,7 +32,7 @@ const TaskPieChart: React.FC<Props> = ({ completed, inProgress }) => {
           </Pie>
         </PieChart>
         <p style={{ textAlign: "center" }}>
-          {Math.round((completed / total) * 100)}% Completed
+          {completedPercent}% Completed
         </p>
       </div>
 
@@ -43,7 +45,7 @@ const TaskPieChart: React.FC<Props> = ({ completed, inProgress }) => {
           </Pie>
         </PieChart>
         <p style={{ textAlign: "center" }}>
-          {Math.round((inProgress / total) * 100)}% In Progress
+          {progressPercent}% In Progress
         </p>
       </div>
     </div>

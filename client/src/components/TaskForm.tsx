@@ -118,7 +118,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
       </div>
 
       <button type="submit" className="submit-btn">
-        {initialData ? "Update Task" : "Create Task"}
+        {initialData ? "Create Task" : "Create Task"}
       </button>
     </form>
   );

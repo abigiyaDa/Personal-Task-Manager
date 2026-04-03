@@ -1,34 +1,32 @@
-import React, { useMemo, useState } from "react";
-import { tasks } from "../data/dummyData";
-import type { Task } from "../types/types";
+import React, { useMemo, useState, useEffect } from "react";
 import TaskForm from "./TaskForm";
+import type { Task } from "../types/types";
 import "../styles/Calendar.css";
+import { getTasks, updateTask } from "../api/taskApi"; // API functions
 
+// Format a date as YYYY-MM-DD
 const formatDateKey = (year: number, month: number, day: number): string => {
-  // the format is 2023-03-27
-  return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(
+    2,
+    "0"
+  )}`;
 };
 
+// Convert task.dueDate to a date key
 const parseDueDateToKey = (dueDate: string, targetYear: number): string | null => {
-  if (dueDate === "Today") {
-    const today = new Date();
-    return formatDateKey(targetYear, today.getMonth(), today.getDate());
-  }
+  if (!dueDate) return null;
 
-  const parts = dueDate.split("/");
-  if (parts.length === 3) {
-    const day = parseInt(parts[0]);
-    const month = parseInt(parts[1]) - 1;
-    const year = parseInt(parts[2]);
-    if (year === targetYear) {
-      return formatDateKey(year, month, day);
-    }
+  const dateObj = new Date(dueDate);
+  if (isNaN(dateObj.getTime())) return null;
+
+  if (dateObj.getFullYear() === targetYear) {
+    return formatDateKey(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
   }
   return null;
 };
 
+// Group tasks by date
 const groupTasksByDate = (tasks: Task[], year: number): Map<string, Task[]> => {
-  // groups tasks:  key - date , value - array of tasks for the days 
   const map = new Map<string, Task[]>();
   for (const task of tasks) {
     const key = parseDueDateToKey(task.dueDate, year);
@@ -41,6 +39,7 @@ const groupTasksByDate = (tasks: Task[], year: number): Map<string, Task[]> => {
   return map;
 };
 
+// Generate weeks for a given month
 const getMonthWeeks = (year: number, month: number) => {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -66,6 +65,7 @@ const getMonthWeeks = (year: number, month: number) => {
   return weeks;
 };
 
+// Month Card Component
 const MonthCard = ({ year, month, tasksByDate, onDateClick }: any) => {
   const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
   const weeks = getMonthWeeks(year, month);
@@ -108,16 +108,49 @@ const MonthCard = ({ year, month, tasksByDate, onDateClick }: any) => {
   );
 };
 
+// Calendar Page Component
 const Calendar: React.FC = () => {
-  const year = 2023;
+  const currentYear = new Date().getFullYear();
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
 
-  const tasksByDate = useMemo(() => groupTasksByDate(tasks, year), []);
+  // Fetch tasks from backend
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const data = await getTasks();
+        setTasks(data);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      }
+    };
+    fetchTasks();
+  }, []);
+
+  // Group tasks by date
+  const tasksByDate = useMemo(() => groupTasksByDate(tasks, currentYear), [tasks, currentYear]);
 
   const handleDateClick = (dateKey: string, tasks: Task[]) => {
     setSelectedDate(dateKey);
     setSelectedTasks(tasks);
+  };
+
+  const toggleTaskStatus = async (task: Task) => {
+    const newStatus = task.status === "Completed" ? "In Progress" : "Completed";
+    try {
+      await updateTask(task.id, { status: newStatus });
+      const updatedTasks = await getTasks(); // Refresh tasks
+      setTasks(updatedTasks);
+      if (selectedDate) {
+        const tasksForDate = updatedTasks.filter(
+          (t) => parseDueDateToKey(t.dueDate, currentYear) === selectedDate
+        );
+        setSelectedTasks(tasksForDate);
+      }
+    } catch (err) {
+      console.error("Failed to update task status:", err);
+    }
   };
 
   const months = Array.from({ length: 12 }, (_, i) => i);
@@ -130,7 +163,7 @@ const Calendar: React.FC = () => {
         {months.map((month) => (
           <MonthCard
             key={month}
-            year={year}
+            year={currentYear}
             month={month}
             tasksByDate={tasksByDate}
             onDateClick={handleDateClick}
@@ -149,7 +182,10 @@ const Calendar: React.FC = () => {
             ) : (
               selectedTasks.map((task) => (
                 <div key={task.id} className="calendar-task-item">
-                  {task.title}
+                  <span>{task.title}</span>
+                  <button onClick={() => toggleTaskStatus(task)}>
+                    {task.status === "Completed" ? "Undo" : "Mark Completed"}
+                  </button>
                 </div>
               ))
             )}

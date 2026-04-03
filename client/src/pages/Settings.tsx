@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/Settings.css";
+import API from "../api/authApi";
 
 function Settings() {
   const [nightMode, setNightMode] = useState(false);
@@ -21,6 +22,19 @@ function Settings() {
       });
     }
   }, []);
+  const handleSave = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    await API.put("/users/update", user, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    localStorage.setItem("user", JSON.stringify(user));
+    alert("Profile updated");
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <Navbar>
@@ -67,7 +81,7 @@ function Settings() {
             </label>
           </div>
 
-          <button className="save-btn">Save Changes</button>
+          <button className="save-btn" onClick={handleSave}>Save Changes</button>
         </div>
       </div>
     </Navbar>

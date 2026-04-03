@@ -8,7 +8,6 @@ interface TaskFormData {
   description: string;
   priority: 'Extreme' | 'Moderate' | 'Low';
   due_date: string;
-  category?: string;
 }
 
 interface TaskFormProps {
@@ -22,7 +21,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
     description: initialData?.description || '',
     priority: initialData?.priority || 'Moderate',
     due_date: initialData?.due_date || '',
-    category: initialData?.category || '',
     
   });
 
@@ -104,22 +102,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
         </div>
       </div>
 
-     <div className="form-group">
-        <label htmlFor="category">Category</label>
-        <div className="form-field">
-          <input
-            type="text"
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder="Enter category"
-          />
-        </div>
-      </div>
-
-
-
+  
       <div className="form-group">
         <label htmlFor="description">Task Description</label>
         <div className="form-field">

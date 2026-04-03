@@ -59,7 +59,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete Task
-DELETE {{baseUrl}}/tasks/2
+DELETE {{baseUrl}}/tasks/6
 Authorization: Bearer {{token}}
 
 ### create category

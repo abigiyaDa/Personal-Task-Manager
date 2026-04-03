@@ -7,8 +7,8 @@ export const validateTask = (data) => {
     throw new Error("Title must be less than 100 characters");
   }
 
-  if (priority && !["Low", "Medium", "High"].includes(priority)) {
-    throw new Error("Priority must be Low, Medium, or High");
+  if (priority && !["Low", "Moderate", "High", "Extreme"].includes(priority)) {
+    throw new Error("Priority must be Low, Moderate, High, or Extreme");
   }
 
   if (due_date && new Date(due_date) < new Date()) {

@@ -14,7 +14,7 @@ function AddTask() {
       } else {
         await createTask(data);
       }
-      navigate("/my-task");
+      navigate("/tasks");
     } catch (err) {
       console.error(err);
     }

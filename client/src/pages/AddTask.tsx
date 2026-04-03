@@ -1,19 +1,26 @@
-import { useLocation,useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
 import { createTask, updateTask } from "../api/taskApi";
-function AddTask() {
+
+const AddTask = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const task = location.state?.task;
+  const task = location.state?.task; // <-- task from MyTask
 
   const handleSubmit = async (data: any) => {
     try {
       if (task) {
-        await updateTask(task.id, data);
+        // EDIT MODE
+        await updateTask(task.id, {
+          ...data,
+          status: task.status,
+        });
       } else {
+        // CREATE MODE
         await createTask(data);
       }
+
       navigate("/tasks");
     } catch (err) {
       console.error(err);
@@ -21,10 +28,20 @@ function AddTask() {
   };
 
   return (
-    <Navbar>
-      <TaskForm initialData={task} onSubmit={handleSubmit} />
-    </Navbar>
+    <TaskForm
+      onSubmit={handleSubmit}
+      initialData={
+        task
+          ? {
+              title: task.title,
+              description: task.description,
+              priority: task.priority,
+              due_date: task.dueDate?.split("T")[0],
+            }
+          : undefined
+      }
+    />
   );
-}
+};
 
 export default AddTask;

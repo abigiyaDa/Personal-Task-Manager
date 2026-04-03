@@ -46,7 +46,7 @@ GET {{baseUrl}}/tasks/1
 Authorization: Bearer {{token}}
 
 ### Update Task
-PUT {{baseUrl}}/tasks/1
+PUT {{baseUrl}}/tasks/7
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

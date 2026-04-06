@@ -7,6 +7,7 @@ import type { Task } from "../types/types";
 import {
   getTasks,
   updateTask,
+  deleteTask, 
 } from "../api/taskApi";
 
 const MyTask: React.FC = () => {
@@ -43,6 +44,24 @@ const MyTask: React.FC = () => {
       fetchTasks();
     } catch (err) {
       console.error(err);
+    }
+  };
+  const handleDelete = async () => {
+    if (!selectedTask) return;
+
+    try {
+      await deleteTask(selectedTask.id);
+
+      const updatedTasks = await getTasks();
+      setTasks(updatedTasks);
+
+      if (updatedTasks.length > 0) {
+        setSelectedTask(updatedTasks[0]);
+      } else {
+        setSelectedTask(null);
+      }
+    } catch (err) {
+      console.error("Failed to delete task:", err);
     }
   };
 
@@ -113,6 +132,10 @@ const MyTask: React.FC = () => {
 
             <button className="edit-btn" onClick={goToEdit}>
               Edit Task
+            </button>
+
+            <button className="delete-btn" onClick={handleDelete}>
+              Delete Task
             </button>
           </div>
         </div>

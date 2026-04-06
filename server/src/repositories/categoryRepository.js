@@ -10,7 +10,7 @@ export const createCategoryRepo = async (name, user_id) => {
 
 export const getCategoriesRepo = async (user_id) => {
   const [rows] = await db.execute(
-    "SELECT * FROM Category WHERE user_id = ?",
+    "SELECT category_id AS id, name FROM Category WHERE user_id = ?",
     [user_id]
   );
   return rows;
@@ -35,8 +35,8 @@ export const deleteCategoryRepo = async (category_id, user_id) => {
 // get category by id
 export const getCategoryByIdRepo = async (category_id, user_id) => {
   const [rows] = await db.execute(
-    "SELECT * FROM Category WHERE category_id=? AND user_id=?",
+    "SELECT category_id AS id, name FROM Category WHERE category_id=? AND user_id=?",
     [category_id, user_id]
   );
-  return rows[0]; // returns single category or undefined
+  return rows[0];
 };

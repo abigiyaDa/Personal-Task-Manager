@@ -9,9 +9,12 @@ import {
 export const createCategory = async (data, user) => {
   if (!data.name) throw new Error("Category name is required");
 
-  await createCategoryRepo(data.name, user.id);
+  const result = await createCategoryRepo(data.name, user.id);
 
-  return { message: "Category created successfully" };
+  return {
+    id: result.insertId,
+    name: data.name,
+  };
 };
 
 export const getCategories = async (user) => {

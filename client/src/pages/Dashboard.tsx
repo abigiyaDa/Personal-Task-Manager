@@ -10,6 +10,7 @@ import {
   getCategories,
   createCategory,
   deleteCategory as deleteCategoryApi,
+  updateCategory as updateCategoryApi,
 } from "../api/categoryApi";
 
 import type { Category, Task } from "../types/types";
@@ -18,8 +19,8 @@ const Dashboard: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
-  // ✅ LOAD DATA
   useEffect(() => {
     fetchData();
   }, []);
@@ -38,21 +39,49 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // ✅ CREATE CATEGORY
+  // CREATE
   const addCategory = async (name: string) => {
     try {
       const newCat = await createCategory(name);
-      setCategories([...categories, newCat]);
+      setCategories((prev) => [...prev, newCat]);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // ✅ DELETE CATEGORY
+  // DELETE
   const deleteCategory = async (id: number) => {
     try {
       await deleteCategoryApi(id);
       setCategories(categories.filter((cat) => cat.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // OPEN EDIT MODAL
+  const openEditModal = (id: number) => {
+    const category = categories.find((cat) => cat.id === id);
+    if (category) {
+      setEditingCategory(category);
+      setShowModal(true);
+    }
+  };
+
+  // UPDATE
+  const updateCategoryName = async (name: string) => {
+    if (!editingCategory) return;
+
+    try {
+      await updateCategoryApi(editingCategory.id, name);
+
+      setCategories(
+        categories.map((cat) =>
+          cat.id === editingCategory.id ? { ...cat, name } : cat
+        )
+      );
+
+      setEditingCategory(null);
     } catch (err) {
       console.error(err);
     }
@@ -67,20 +96,24 @@ const Dashboard: React.FC = () => {
         <h2>Welcome back 👋</h2>
 
         <div className="dashboard-grid">
-          {/* LEFT */}
           <div className="left-panel">
-            <button onClick={() => setShowModal(true)} className="category-btn">
+            <button
+              onClick={() => {
+                setEditingCategory(null);
+                setShowModal(true);
+              }}
+              className="category-btn"
+            >
               Categories
             </button>
 
             <CategoryList
               categories={categories}
               onDelete={deleteCategory}
-              onEdit={(id) => alert("Edit category " + id)}
+              onEdit={openEditModal}
             />
           </div>
 
-          {/* RIGHT */}
           <div className="right-panel">
             <h3>Task Status</h3>
             <TaskPieChart
@@ -101,6 +134,8 @@ const Dashboard: React.FC = () => {
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onCreate={addCategory}
+          onUpdate={updateCategoryName}
+          editingCategory={editingCategory}
         />
       </div>
     </Navbar>

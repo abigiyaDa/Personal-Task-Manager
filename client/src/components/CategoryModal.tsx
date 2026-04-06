@@ -1,20 +1,43 @@
-// components/CategoryModal.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/categoryModal.css";
+import type { Category } from "../types/types";
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (name: string) => void;
+  onUpdate: (name: string) => void;
+  editingCategory: Category | null;
 }
 
-const CategoryModal: React.FC<Props> = ({ isOpen, onClose, onCreate }) => {
+const CategoryModal: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onCreate,
+  onUpdate,
+  editingCategory,
+}) => {
   const [name, setName] = useState<string>("");
+
+  useEffect(() => {
+    if (editingCategory) {
+      setName(editingCategory.name);
+    } else {
+      setName("");
+    }
+  }, [editingCategory]);
 
   if (!isOpen) return null;
 
-  const handleCreate = () => {
+  const handleSubmit = () => {
     if (!name.trim()) return;
-    onCreate(name);
+
+    if (editingCategory) {
+      onUpdate(name);
+    } else {
+      onCreate(name);
+    }
+
     setName("");
     onClose();
   };
@@ -22,7 +45,8 @@ const CategoryModal: React.FC<Props> = ({ isOpen, onClose, onCreate }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h3>Create Category</h3>
+        <h3>{editingCategory ? "Edit Category" : "Create Category"}</h3>
+
         <input
           type="text"
           placeholder="Category name"
@@ -31,7 +55,9 @@ const CategoryModal: React.FC<Props> = ({ isOpen, onClose, onCreate }) => {
         />
 
         <div className="modal-buttons">
-          <button onClick={handleCreate}>Create</button>
+          <button onClick={handleSubmit}>
+            {editingCategory ? "Update" : "Create"}
+          </button>
           <button onClick={onClose}>Cancel</button>
         </div>
       </div>

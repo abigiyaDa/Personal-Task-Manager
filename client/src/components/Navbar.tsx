@@ -3,7 +3,7 @@ import "../styles/navbar.css";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 
 interface Props {
   children: ReactNode;
@@ -20,7 +20,13 @@ const Navbar: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const formattedDate = `${dayName} ${day}/${month}/${year}`;
-
+  
+  const [dueTodayCount, setDueTodayCount] = useState(0);useEffect(() => {
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]") as { dueDate: string }[];
+  const todayKey = `${year}-${month}-${day}`; // YYYY-MM-DD
+  const count = tasks.filter(task => task.dueDate === todayKey).length;
+  setDueTodayCount(count);
+}, []);
   
   const handleLogout = () => {
     localStorage.removeItem("token"); // remove token
@@ -94,7 +100,10 @@ const Navbar: React.FC<Props> = ({ children }) => {
             <NavLink to="/calendar">
               <FaCalendarAlt className="icon" />
             </NavLink>
-            <FaBell className="icon" />
+            <div className="notification-wrapper">
+  <FaBell className="icon" />
+  {dueTodayCount > 0 && <span className="notification-badge">{dueTodayCount}</span>}
+</div>
             <span className="date">{formattedDate}</span>
           </div>
         </div>

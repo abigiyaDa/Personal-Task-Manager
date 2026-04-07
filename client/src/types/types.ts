@@ -7,6 +7,8 @@ export interface Task {
   priority: "Low" | "Moderate" | "High" | "Extreme";
   createdAt: string;
   dueDate: string;
+  categoryId?: number;
+  categoryName?: string;
 }
 
 export interface Category {

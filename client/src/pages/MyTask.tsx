@@ -119,6 +119,7 @@ const MyTask: React.FC = () => {
         <div className="task-details">
           <h2>{selectedTask.title}</h2>
           <p><strong>Priority:</strong> {selectedTask.priority}</p>
+          <p><strong>Category:</strong> {selectedTask.categoryName || "None"}</p>
           <p><strong>Status:</strong> {selectedTask.status}</p>
           <p><strong>Description:</strong> {selectedTask.description}</p>
           <p><strong>Due Date:</strong> {selectedTask.dueDate}</p>

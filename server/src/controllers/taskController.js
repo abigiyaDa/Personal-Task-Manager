@@ -4,6 +4,7 @@ import {
   getTaskById,
   updateTask,
   deleteTask,
+  assignCategoryToTask
 } from "../services/taskService.js";
 
 export const createTaskController = async (req, res, next) => {
@@ -45,6 +46,17 @@ export const updateTaskController = async (req, res, next) => {
 export const deleteTaskController = async (req, res, next) => {
   try {
     const result = await deleteTask(req.params.id, req.user);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const assignCategoryController = async (req, res, next) => {
+  try {
+    const { taskId, categoryId } = req.body;
+    const result = await assignCategoryToTask(taskId, categoryId, req.user);
     res.status(200).json(result);
   } catch (error) {
     next(error);

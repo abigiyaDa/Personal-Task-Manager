@@ -15,6 +15,7 @@ const TaskCard: React.FC<Props> = ({ task }) => {
         <span className={`status ${task.status === "Completed" ? "completed" : "progress"}`}>{task.status}</span>
       </div>
       <p>{task.description}</p>
+      <p><strong>Category:</strong> {task.categoryName || "None"}</p>
       <small>Due: {task.dueDate}</small>
     </div>
   );

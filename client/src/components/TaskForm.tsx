@@ -2,40 +2,47 @@
 
 import React, { useState } from 'react';
 import '../styles/TaskForm.css'; // Import the CSS file
+import type { Category } from '../types/types';
 
 interface TaskFormData {
   title: string;
   description: string;
   priority: 'Extreme' | 'Moderate' | 'Low';
   due_date: string;
+  categoryId?: number;
 }
 
 interface TaskFormProps {
   onSubmit?: (data: TaskFormData) => void;
   initialData?: Partial<TaskFormData>;
+  categories: Category[];
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData, categories }) => {
+  const isEditMode = !!initialData;
   const [formData, setFormData] = useState<TaskFormData>({
     title: initialData?.title || '',
     description: initialData?.description || '',
     priority: initialData?.priority || 'Moderate',
     due_date: initialData?.due_date || '',
-    
+    categoryId: initialData?.categoryId || 0,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  const { name, value } = e.target;
 
-  const handlePriorityChange = (priority: 'Extreme' | 'Moderate' | 'Low') => {
-    setFormData(prev => ({ ...prev, priority }));
+  setFormData(prev => ({
+    ...prev,
+    [name]: name === "categoryId" ? Number(value) : value,
+  }));
+};
+  const handlePriorityChange = (
+    priority: "Extreme" | "Moderate" | "Low"
+  ) => {
+    setFormData((prev) => ({ ...prev, priority }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit?.(formData);
@@ -74,35 +81,46 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
         <label>Priority</label>
         <div className="form-field priority-field">
           <div className="priority-options">
-            <label className={`priority-option ${formData.priority === 'Extreme' ? 'selected' : ''}`}>
-              <input
-                type="checkbox"
-                checked={formData.priority === 'Extreme'}
-                onChange={() => handlePriorityChange('Extreme')}
-              />
-              <span>Extreme</span>
-            </label>
-            <label className={`priority-option ${formData.priority === 'Moderate' ? 'selected' : ''}`}>
-              <input
-                type="checkbox"
-                checked={formData.priority === 'Moderate'}
-                onChange={() => handlePriorityChange('Moderate')}
-              />
-              <span>Moderate</span>
-            </label>
-            <label className={`priority-option ${formData.priority === 'Low' ? 'selected' : ''}`}>
-              <input
-                type="checkbox"
-                checked={formData.priority === 'Low'}
-                onChange={() => handlePriorityChange('Low')}
-              />
-              <span>Low</span>
-            </label>
+            {["Extreme", "Moderate", "Low"].map((p) => (
+              <label
+                key={p}
+                className={`priority-option ${
+                  formData.priority === p ? "selected" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="priority"
+                  checked={formData.priority === p}
+                  onChange={() =>
+                    handlePriorityChange(p as TaskFormData["priority"])
+                  }
+                />
+                <span>{p}</span>
+              </label>
+            ))}
           </div>
         </div>
       </div>
 
-  
+      <div className="form-group">
+        <label htmlFor="category">Category</label>
+        <div className="form-field">
+          <select
+            name="categoryId"
+            value={formData.categoryId || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div className="form-group">
         <label htmlFor="description">Task Description</label>
         <div className="form-field">
@@ -118,7 +136,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialData }) => {
       </div>
 
       <button type="submit" className="submit-btn">
-        {initialData ? "Create Task" : "Create Task"}
+        {isEditMode ? "Update Task" : "Create Task"}
       </button>
     </form>
   );

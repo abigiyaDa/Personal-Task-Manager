@@ -11,7 +11,10 @@ export const validateTask = (data) => {
     throw new Error("Priority must be Low, Moderate, High, or Extreme");
   }
 
-  if (due_date && new Date(due_date) < new Date()) {
-    throw new Error("Due date must be in the future");
+  //  ONLY validate due_date IF explicitly provided
+  if (due_date !== undefined && due_date !== "") {
+    if (new Date(due_date) < new Date()) {
+      throw new Error("Due date must be in the future");
+    }
   }
 };

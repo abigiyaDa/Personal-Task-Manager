@@ -30,3 +30,10 @@ export const deleteTask = async (id: number) => {
   const res = await API.delete(`/tasks/${id}`);
   return res.data;
 };
+export const assignCategoryToTask = async (taskId: number, categoryId: number) => {
+  const res = await API.post("/tasks/assign-category", {
+    taskId,
+    categoryId,
+  });
+  return res.data;
+};

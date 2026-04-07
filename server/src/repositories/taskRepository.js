@@ -13,10 +13,23 @@ export const createTaskRepo = async (task) => {
 };
 
 export const getAllTasksRepo = async (user_id) => {
-  const [rows] = await db.execute(
-    "SELECT * FROM Task WHERE user_id = ? ORDER BY created_at DESC",
-    [user_id]
-  );
+  const [rows] = await db.execute(`
+    SELECT 
+      t.task_id AS id,
+      t.title,
+      t.description,
+      t.status,
+      t.priority,
+      t.due_date AS dueDate,
+      c.category_id AS categoryId,
+      c.name AS categoryName
+    FROM Task t
+    LEFT JOIN TaskCategory tc ON t.task_id = tc.task_id
+    LEFT JOIN Category c ON tc.category_id = c.category_id
+    WHERE t.user_id = ?
+    ORDER BY t.created_at DESC
+  `, [user_id]);
+
   return rows;
 };
 
@@ -72,4 +85,27 @@ export const deleteTaskRepo = async (task_id, user_id) => {
     [task_id, user_id]
   );
   return result;
+};
+export const assignCategoryToTaskRepo = async (task_id, category_id) => {
+  // check if exists
+  const [rows] = await db.execute(
+    "SELECT * FROM TaskCategory WHERE task_id = ?",
+    [task_id]
+  );
+
+  if (rows.length > 0) {
+    // ✅ update existing
+    await db.execute(
+      "UPDATE TaskCategory SET category_id = ? WHERE task_id = ?",
+      [category_id, task_id]
+    );
+  } else {
+    // ✅ insert new
+    await db.execute(
+      "INSERT INTO TaskCategory (task_id, category_id) VALUES (?, ?)",
+      [task_id, category_id]
+    );
+  }
+
+  return { message: "Category assigned/updated" };
 };

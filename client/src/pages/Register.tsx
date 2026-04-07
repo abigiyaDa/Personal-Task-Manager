@@ -3,6 +3,7 @@ import illustration from "../assets/sign-up.png";
 import "../styles/register.css";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/authApi"; 
+import { FaArrowLeft } from "react-icons/fa"; // optional icon
 
 const Register = () => {
   const navigate = useNavigate();
@@ -50,6 +51,11 @@ const Register = () => {
         <img src={illustration} alt="signup visual" />
       </div>
       <div className="reg-right">
+        {/* Back arrow at top-left */}
+        <span className="back-arrow" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </span>
+
         <h2>Sign Up</h2>
 
         {error && <p className="error">{error}</p>}
@@ -99,3 +105,4 @@ const Register = () => {
 };
 
 export default Register;
+

@@ -23,9 +23,22 @@
 }
 
 /* RIGHT SIDE (FORM) */
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+.back-arrow:hover {
+  color: #7c3aed; 
+}
+
 .reg-right {
   flex: 1;
   display: flex;
+   position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;     

@@ -9,11 +9,28 @@
   width: 40%;
   padding: 40px;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;/*vertical center */
   background-color: #f5f6fa;
   align-items: center; /*horizontal center */
 }
+
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.back-arrow:hover {
+  color: #7c3aed; 
+}
+
 .login-left h1 {
   font-size : 36px;
   margin-bottom: 30px;

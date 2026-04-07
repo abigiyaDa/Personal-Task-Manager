@@ -1,12 +1,12 @@
 import signInImage from "../assets/sign-in.png";
 import "../styles/login.css";
-import { FaUser,FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaArrowLeft } from "react-icons/fa"; // added back arrow
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/authApi";
 
-export default function Login(){
-    const navigate = useNavigate();
+export default function Login() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -31,40 +31,56 @@ export default function Login(){
       setError(err.response?.data?.error || "Login failed");
     }
   };
-    return (
-        <div className="login-container">
-            <div className="login-left">
-                <h1>Sign In</h1>
 
-                {error && <p className="error">{error}</p>}
+  return (
+    <div className="login-container">
+      <div className="login-left">
+        {/* Back arrow at top-left */}
+        <span className="back-arrow" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </span>
 
-                <div className="input-group">
-                    <FaUser className="input-icon"></FaUser>
-                    <input type="email" name="email" placeholder="Enter Email" onChange={handleChange}/>
-                </div>
+        <h1>Sign In</h1>
 
-                <div className="input-group">
-                    <FaLock className="input-icon"></FaLock>
-                    <input type="password" name="password" placeholder="Enter Password" onChange={handleChange}/>
-                </div>
+        {error && <p className="error">{error}</p>}
 
-                <div className="remember">
-                    <input type="checkbox" />
-                    <span>Remember Me</span>
-                </div>
-
-                <button className="login-btn" onClick={handleSubmit}>
-                    Login
-                </button>
-
-                <p className="register-text">
-                    Don't have an account? <a href="/register">Register here</a>
-                </p>
-            </div>
-
-            <div className="login-right">
-                <img src={signInImage} alt="Sign In" className="login-image"/>
-            </div>
+        <div className="input-group">
+          <FaUser className="input-icon" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+          />
         </div>
-    )
+
+        <div className="input-group">
+          <FaLock className="input-icon" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="remember">
+          <input type="checkbox" />
+          <span>Remember Me</span>
+        </div>
+
+        <button className="login-btn" onClick={handleSubmit}>
+          Login
+        </button>
+
+        <p className="register-text">
+          Don't have an account? <a href="/register">Register here</a>
+        </p>
+      </div>
+
+      <div className="login-right">
+        <img src={signInImage} alt="Sign In" className="login-image" />
+      </div>
+    </div>
+  );
 }

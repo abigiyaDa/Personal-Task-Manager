@@ -1,9 +1,16 @@
 import React from "react";
 import "../styles/Terms.css";
+import { FaArrowLeft } from "react-icons/fa"; // added back arrow
+import { useNavigate } from "react-router-dom";
+
 
 const Terms: React.FC = () => {
+  const navigate = useNavigate();
   return (
       <div className="terms-page">
+        <span className="back-arrow" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </span>
         <h1>Terms and Conditions</h1>
 
         <p>

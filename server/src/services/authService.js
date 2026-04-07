@@ -1,6 +1,6 @@
 // business logic - handles validation, password hashing, and token generation for user registration and login
 
-import { createUser, findUserByEmail } from "../repositories/userRepository.js";
+import { createUser, findUserByEmail, updateUser } from "../repositories/userRepository.js";
 import { hashPassword, comparePassword } from "../utils/passwordHasher.js";
 import { generateToken } from "../utils/token.js";
 import { validateRegister, validateLogin } from "../validators/authValidator.js";
@@ -47,5 +47,18 @@ export const loginUser = async (data) => {
       name: user.name,
       email: user.email,
     },
+  };
+};
+
+export const updateUserProfile = async (userid, data) => {
+  const { name, email } = data;
+  if (!name || !email) {
+    throw new Error("Name and email are required");
+  }
+  await updateUser(userid, name, email);
+
+  return { 
+    message: "Profile updated successfully" ,
+    user: { id: userid, name, email }
   };
 };

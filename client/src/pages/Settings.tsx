@@ -24,12 +24,19 @@ function Settings() {
   }, []);
   const handleSave = async () => {
   try {
-    const token = localStorage.getItem("token");
-    await API.put("/users/update", user, {
-      headers: { Authorization: `Bearer ${token}` },
+    await API.put("/auth/users/update", {
+      name: user.username, // map correctly
+      email: user.email,
     });
 
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        ...user,
+        name: user.username,
+      })
+    );
+
     alert("Profile updated");
   } catch (err) {
     console.error(err);

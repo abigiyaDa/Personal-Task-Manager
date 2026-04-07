@@ -26,3 +26,15 @@ export const findUserByEmail = async (email) => {
     throw new Error("Database error");
   }
 };
+export const updateUser = async(id , name , email) =>{
+  try {
+    const [result] = await db.execute(
+      "UPDATE User SET name = ?, email = ? WHERE user_id = ?",
+      [name, email, id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating user:", error);
+    throw new Error("Database error");
+  }
+}

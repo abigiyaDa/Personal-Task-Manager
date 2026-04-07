@@ -4,7 +4,7 @@ import type { Task } from "../types/types";
 import { getCategories } from "../api/categoryApi";
 import type { Category } from "../types/types";
 import "../styles/Calendar.css";
-import { getTasks, updateTask, createTask } from "../api/taskApi"; // ✅ added createTask
+import { getTasks, updateTask, createTask } from "../api/taskApi"; 
 
 // Format a date as YYYY-MM-DD
 const formatDateKey = (year: number, month: number, day: number): string => {
@@ -230,7 +230,7 @@ const Calendar: React.FC = () => {
 
             <h3>Create New Task</h3>
 
-            {/* ✅ FIXED PART */}
+         
             <TaskForm
               initialData={{ due_date: selectedDate }}
               categories={categories} // ✅ FIX

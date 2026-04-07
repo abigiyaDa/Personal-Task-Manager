@@ -1,9 +1,8 @@
-import Navbar from "../components/Navbar";
+import React from "react";
 import "../styles/Terms.css";
 
-function Terms() {
+const Terms: React.FC = () => {
   return (
-    <Navbar>
       <div className="terms-page">
         <h1>Terms and Conditions</h1>
 
@@ -37,8 +36,7 @@ function Terms() {
 
         <p>By continuing, you accept these terms.</p>
       </div>
-    </Navbar>
   );
-}
+};
 
 export default Terms;

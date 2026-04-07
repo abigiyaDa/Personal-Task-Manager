@@ -32,6 +32,8 @@ function App() {
         <Route path="/add-task" element= {<AddTask />} />
         < Route path="/calendar" element = {<Calandar/ >} />
         < Route path="/settings" element = { <Settings /> } />
+        <Route path="/help" element={<Help />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </BrowserRouter>    
     

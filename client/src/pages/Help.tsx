@@ -1,7 +1,8 @@
+import React from "react";
 import Navbar from "../components/Navbar";
 import "../styles/Help.css";
 
-function Help() {
+const Help = () => {
   return (
     <Navbar>
       <div className="help-page">
@@ -53,6 +54,6 @@ function Help() {
       </div>
     </Navbar>
   );
-}
+};
 
 export default Help;

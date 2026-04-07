@@ -7,6 +7,8 @@ import MyTask from "./pages/MyTask";
 import   AddTask  from "./pages/AddTask";
 import Calandar  from "./pages/Calendar";
 import Settings from "./pages/Settings";
+import Help from "./pages/Help";
+import Terms from "./pages/Terms";
 
 function App() {
   return (

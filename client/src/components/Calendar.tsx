@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import TaskForm from "./TaskForm";
 import type { Task } from "../types/types";
+import { getCategories } from "../api/categoryApi";
+import type { Category } from "../types/types";
 import "../styles/Calendar.css";
 import { getTasks, updateTask, createTask } from "../api/taskApi"; // ✅ added createTask
 
@@ -131,19 +133,25 @@ const Calendar: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   // Fetch tasks
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-      } catch (error) {
-        console.error("Failed to fetch tasks:", error);
-      }
-    };
-    fetchTasks();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const [taskData, categoryData] = await Promise.all([
+        getTasks(),
+        getCategories(),
+      ]);
+      setTasks(taskData);
+      setCategories(categoryData);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
 
   // Group tasks
   const tasksByDate = useMemo(
@@ -225,14 +233,15 @@ const Calendar: React.FC = () => {
             {/* ✅ FIXED PART */}
             <TaskForm
               initialData={{ due_date: selectedDate }}
+              categories={categories} // ✅ FIX
               onSubmit={async (data) => {
                 try {
-                  await createTask(data); // ✅ create task
+                  await createTask(data);
 
-                  const updatedTasks = await getTasks(); // refresh
+                  const updatedTasks = await getTasks();
                   setTasks(updatedTasks);
 
-                  setSelectedDate(null); // close modal
+                  setSelectedDate(null);
                 } catch (err) {
                   console.error("Failed to create task:", err);
                 }

@@ -1,0 +1,18 @@
+.help-page {
+  padding: 40px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.help-page h1 {
+  margin-bottom: 20px;
+}
+
+.help-page h2 {
+  margin-top: 20px;
+  color: #5f33e1;
+}
+
+.help-page ul {
+  margin-left: 20px;
+}

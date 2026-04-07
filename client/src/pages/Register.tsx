@@ -90,8 +90,13 @@ const Register = () => {
           />
 
           <div className="terms">
-            <input type="checkbox" />
-            <span>I agree to all terms</span>
+            <input type="checkbox" required />
+            <span>
+              I agree to{" "}
+              <Link to="/terms" className="link">
+                Terms and Conditions
+              </Link>
+            </span>
           </div>
 
           <button type="submit">Register</button>

@@ -34,9 +34,7 @@ const CategoryPage: React.FC = () => {
   const handleUpdate = async () => {
     if (!selectedCategory) return;
     try {
-      await updateCategory(selectedCategory.id, {
-        name: selectedCategory.name + " Updated",
-      });
+      await updateCategory(selectedCategory.id, selectedCategory.name + " Updated");
       fetchCategories();
     } catch (err) {
       console.error(err);

@@ -9,45 +9,35 @@ interface Props {
 const TaskPieChart: React.FC<Props> = ({ completed, inProgress }) => {
   const total = completed + inProgress;
 
-  const completedData = [
+  const data = [
     { name: "Completed", value: completed },
-    { name: "Remaining", value: total - completed },
+    { name: "In Progress", value: inProgress },
+    { name: "Remaining", value: Math.max(0, total - (completed + inProgress)) },
   ];
 
-  const progressData = [
-    { name: "In Progress" , value: inProgress },
-    { name: "Remaining", value: total - inProgress },
-  ];
   const completedPercent = total === 0 ? 0 : Math.round((completed / total) * 100);
   const progressPercent = total === 0 ? 0 : Math.round((inProgress / total) * 100);
 
-  return (
-    <div style={{ display: "flex", gap: "40px" }}>
-      {/* Completed */}
-      <div>
-        <PieChart width={150} height={150}>
-          <Pie data={completedData} dataKey="value" innerRadius={40} outerRadius={60}>
-            <Cell fill="green" />
-            <Cell fill="#eee" />
-          </Pie>
-        </PieChart>
-        <p style={{ textAlign: "center" }}>
-          {completedPercent}% Completed
-        </p>
-      </div>
+  const COLORS = ["#eee3e3", "#7c3aed", "#eee"];
 
-      {/* In Progress */}
-      <div>
-        <PieChart width={150} height={150}>
-          <Pie data={progressData} dataKey="value" innerRadius={40} outerRadius={60}>
-            <Cell fill="blue" />
-            <Cell fill="#eee" />
-          </Pie>
-        </PieChart>
-        <p style={{ textAlign: "center" }}>
-          {progressPercent}% In Progress
-        </p>
-      </div>
+  return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <PieChart width={200} height={200} >
+        <Pie
+          data={data}
+          dataKey="value"
+          innerRadius={50}
+          outerRadius={80}
+          paddingAngle={2}
+        >
+          {data.map((_, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
+      </PieChart>
+      <p>
+        {completedPercent}% Completed | {progressPercent}% In Progress
+      </p>
     </div>
   );
 };

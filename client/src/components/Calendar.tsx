@@ -18,16 +18,12 @@ const formatDateKey = (year: number, month: number, day: number): string => {
 const parseDueDateToKey = (dueDate: string, targetYear: number): string | null => {
   if (!dueDate) return null;
 
-  const dateObj = new Date(dueDate);
-  if (isNaN(dateObj.getTime())) return null;
+  const [year, month, day] = dueDate.split("-").map(Number);
 
-  if (dateObj.getFullYear() === targetYear) {
-    return formatDateKey(
-      dateObj.getFullYear(),
-      dateObj.getMonth(),
-      dateObj.getDate()
-    );
+  if (year === targetYear) {
+    return formatDateKey(year, month - 1, day);
   }
+
   return null;
 };
 

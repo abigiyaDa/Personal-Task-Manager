@@ -28,10 +28,12 @@ const CategoryList: React.FC<Props> = ({ categories, onDelete, onEdit }) => {
               <td>{cat.name}</td>
               <td className="action-btns">
                 <button className="edit-btn" onClick={() => onEdit(cat.id)}>
-                  <Edit/>  Edit
+                  {/* <Edit/>   */}
+                  Edit
                 </button>
                 <button className="delete-btn" onClick={() => onDelete(cat.id)}>
-                  <Delete />Delete
+                  {/* <Delete /> */}
+                  Delete
                 </button>
               </td>
             </tr>

@@ -9,6 +9,7 @@ import Calandar  from "./pages/Calendar";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import Terms from "./pages/Terms";
+import Category from "./pages/Category";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         < Route path="/settings" element = { <Settings /> } />
         <Route path="/help" element={<Help />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/category" element={<Category />} />
       </Routes>
     </BrowserRouter>    
     

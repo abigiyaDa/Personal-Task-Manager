@@ -61,6 +61,11 @@ const Navbar: React.FC<Props> = ({ children }) => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/category">
+              <FaPlus /> Category
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/calendar">
               <FaCalendarAlt /> Calendar
             </NavLink>

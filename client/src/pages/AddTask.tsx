@@ -62,7 +62,7 @@ const AddTask = () => {
                 title: task.title,
                 description: task.description,
                 priority: task.priority,
-                due_date: task.dueDate?.split("T")[0],
+                due_date: task.dueDate ? task.dueDate.split(' ')[0].split('T')[0] : '',
                 categoryId: task.categoryId,
               }
             : undefined

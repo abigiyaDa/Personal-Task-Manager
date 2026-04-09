@@ -2,142 +2,105 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/Pages.css";
-import type { Task } from "../types/types";
+import type { Category } from "../types/types";
 
 import {
   getCategories,
-  createCategory,
-  deleteCategory as deleteCategoryApi,
-  updateCategory as updateCategoryApi,
+  updateCategory,
+  deleteCategory,
 } from "../api/categoryApi";
 
-const Category: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+const CategoryPage: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const navigate = useNavigate();
 
-  // ✅ FETCH TASKS
+  // ✅ FETCH CATEGORIES
   useEffect(() => {
-    fetchTasks();
+    fetchCategories();
   }, []);
 
-  const fetchTasks = async () => {
+  const fetchCategories = async () => {
     try {
-      const data = await getTasks();
-      setTasks(data);
-      if (data.length > 0) setSelectedTask(data[0]);
+      const data = await getCategories();
+      setCategories(data);
+      if (data.length > 0) setSelectedCategory(data[0]);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // ✅ TOGGLE STATUS (API)
-  const toggleCompleted = async () => {
-    if (!selectedTask) return;
-
-    const newStatus =
-      selectedTask.status === "Completed"
-        ? "In Progress"
-        : "Completed";
-
+  // ✅ UPDATE CATEGORY
+  const handleUpdate = async () => {
+    if (!selectedCategory) return;
     try {
-      await updateTask(selectedTask.id, { status: newStatus });
-      fetchTasks();
+      await updateCategory(selectedCategory.id, {
+        name: selectedCategory.name + " Updated",
+      });
+      fetchCategories();
     } catch (err) {
       console.error(err);
     }
   };
+
+  // ✅ DELETE CATEGORY
   const handleDelete = async () => {
-    if (!selectedTask) return;
-
+    if (!selectedCategory) return;
     try {
-      await deleteTask(selectedTask.id);
-
-      const updatedTasks = await getTasks();
-      setTasks(updatedTasks);
-
-      if (updatedTasks.length > 0) {
-        setSelectedTask(updatedTasks[0]);
-      } else {
-        setSelectedTask(null);
-      }
+      await deleteCategory(selectedCategory.id);
+      const updatedCategories = await getCategories();
+      setCategories(updatedCategories);
+      setSelectedCategory(updatedCategories[0] || null);
     } catch (err) {
-      console.error("Failed to delete task:", err);
+      console.error("Failed to delete category:", err);
     }
   };
 
   const goToEdit = () => {
-    if (!selectedTask) return;
-    navigate("/add-task", { state: { task: selectedTask } });
+    if (!selectedCategory) return;
+    navigate("/add-category", { state: { category: selectedCategory } });
   };
 
-  if (!selectedTask) return <p>Loading...</p>;
+  if (!selectedCategory) return <p>Loading...</p>;
 
   return (
     <Navbar>
       <div className="task-page">
-        {/* LEFT */}
-        <div className="task-list">
-          <div className="task-list-header">
-            <h3>My Tasks</h3>
+        {/* LEFT: Category List */}
+        <div className="category-list">
+          <div className="category-list-header">
+            <h3>Categories</h3>
             <button
-              className="add-task-btn"
-              onClick={() => navigate("/add-task")}
+              className="add-category-btn"
+              onClick={() => navigate("/add-category")}
             >
-              + Add New Task
+              + Add New Category
             </button>
           </div>
 
-          {tasks.map((task) => (
+          {categories.map((category) => (
             <div
-              key={task.id}
-              className={`task-item ${
-                task.id === selectedTask.id ? "active" : ""
+              key={category.id}
+              className={`category-item ${
+                category.id === selectedCategory.id ? "active" : ""
               }`}
-              onClick={() => setSelectedTask(task)}
+              onClick={() => setSelectedCategory(category)}
             >
-              <h4>{task.title}</h4>
-              <p>{task.description}</p>
-              <div className="task-meta">
-                <span className={`priority ${task.priority.toLowerCase()}`}>
-                  {task.priority}
-                </span>
-                <span
-                  className={`status ${
-                    task.status === "Completed"
-                      ? "completed"
-                      : "progress"
-                  }`}
-                >
-                  {task.status}
-                </span>
-              </div>
+              <h4>{category.name}</h4>
             </div>
           ))}
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT: Category Details */}
         <div className="task-details">
-          <h2>{selectedTask.title}</h2>
-          <p><strong>Priority:</strong> {selectedTask.priority}</p>
-          <p><strong>Category:</strong> {selectedTask.categoryName || "None"}</p>
-          <p><strong>Status:</strong> {selectedTask.status}</p>
-          <p><strong>Description:</strong> {selectedTask.description}</p>
-          <p><strong>Due Date:</strong> {selectedTask.dueDate}</p>
+          <h2>{selectedCategory.name}</h2>
 
           <div className="task-buttons">
-            <button className="complete-btn" onClick={toggleCompleted}>
-              {selectedTask.status === "Completed"
-                ? "Undo"
-                : "Mark Completed"}
-            </button>
-
             <button className="edit-btn" onClick={goToEdit}>
-              Edit Task
+              Edit Category
             </button>
-
             <button className="delete-btn" onClick={handleDelete}>
-              Delete Task
+              Delete Category
             </button>
           </div>
         </div>
@@ -146,4 +109,4 @@ const Category: React.FC = () => {
   );
 };
 
-export default Category;
+export default CategoryPage;

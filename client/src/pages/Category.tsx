@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/Pages.css";
 import type { Category } from "../types/types";
+import "../styles/category.css";
 
 import {
   getCategories,
@@ -63,7 +64,7 @@ const CategoryPage: React.FC = () => {
 
   return (
     <Navbar>
-      <div className="task-page">
+      <div className="category-page">
         {/* LEFT: Category List */}
         <div className="category-list">
           <div className="category-list-header">
@@ -90,13 +91,13 @@ const CategoryPage: React.FC = () => {
         </div>
 
         {/* RIGHT: Category Details */}
-        <div className="task-details">
+        <div className="category-details">
           <h2>{selectedCategory.name}</h2>
 
-          <div className="task-buttons">
+          <div className="category-buttons">
             <button className="edit-btn" onClick={goToEdit}>
               Edit Category
-            </button>
+            </button> 
             <button className="delete-btn" onClick={handleDelete}>
               Delete Category
             </button>

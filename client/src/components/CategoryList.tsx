@@ -1,7 +1,7 @@
 // components/CategoryList.tsx
 import React from "react";
 import type { Category } from "../types/types";
-import {Edit , Delete} from 'lucide-react';
+// import {Edit , Delete} from 'lucide-react';
 
 interface Props {
   categories: Category[];

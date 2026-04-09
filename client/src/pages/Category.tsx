@@ -5,10 +5,11 @@ import "../styles/Pages.css";
 import type { Task } from "../types/types";
 
 import {
-  getTasks,
-  updateTask,
-  deleteTask, 
-} from "../api/taskApi";
+  getCategories,
+  createCategory,
+  deleteCategory as deleteCategoryApi,
+  updateCategory as updateCategoryApi,
+} from "../api/categoryApi";
 
 const Category: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);

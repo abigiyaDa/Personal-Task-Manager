@@ -109,6 +109,7 @@ const Dashboard: React.FC = () => {
 
             <CategoryList
               categories={categories}
+              tasks={tasks}   // ✅ ADD THIS
               onDelete={deleteCategory}
               onEdit={openEditModal}
             />

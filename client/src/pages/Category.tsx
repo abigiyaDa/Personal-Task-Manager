@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "../styles/Pages.css";
-import type { Category } from "../types/types";
 import "../styles/category.css";
+
+import type { Category, Task } from "../types/types";
 
 import {
   getCategories,
@@ -12,14 +11,19 @@ import {
   updateCategory as updateCategoryApi,
 } from "../api/categoryApi";
 
+import { getTasksByCategory } from "../api/taskApi";
+
+import TaskCard from "../components/TaskCard";
+import CategoryModal from "../components/CategoryModal";
+
 const CategoryPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [showModal, setShowModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const navigate = useNavigate();
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  // ✅ FETCH CATEGORIES
+  const [showModal, setShowModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -34,134 +38,130 @@ const CategoryPage: React.FC = () => {
     }
   };
 
-  // // ✅ UPDATE CATEGORY
-  // const handleUpdate = async () => {
-  //   if (!selectedCategory) return;
-  //   try {
-  //     await updateCategoryApi(selectedCategory.id, selectedCategory.name + " Updated");
-  //     fetchCategories();
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchTasks(selectedCategory.id);
+    }
+  }, [selectedCategory]);
 
-  // // ✅ DELETE CATEGORY
-  // const handleDelete = async () => {
-  //   if (!selectedCategory) return;
-  //   try {
-  //     await deleteCategoryApi(selectedCategory.id);
-  //     const updatedCategories = await getCategories();
-  //     setCategories(updatedCategories);
-  //     setSelectedCategory(updatedCategories[0] || null);
-  //   } catch (err) {
-  //     console.error("Failed to delete category:", err);
-  //   }
-  // };
+  const fetchTasks = async (categoryId: number) => {
+    try {
+      const data = await getTasksByCategory(categoryId);
+      setTasks(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const goToEdit = () => {
-    if (!selectedCategory) return;
-    navigate("/add-category", { state: { category: selectedCategory } });
+  // CREATE
+  const addCategory = async (name: string) => {
+    const newCat = await createCategory(name);
+    setCategories((prev) => [...prev, newCat]);
+  };
+
+  // DELETE
+  const deleteCategory = async (id: number) => {
+    await deleteCategoryApi(id);
+    const updated = categories.filter((c) => c.id !== id);
+    setCategories(updated);
+    setSelectedCategory(updated[0] || null);
+  };
+
+  // OPEN EDIT
+  const openEditModal = (cat: Category) => {
+    setEditingCategory(cat);
+    setShowModal(true);
+  };
+
+  // UPDATE
+  const updateCategoryName = async (name: string) => {
+    if (!editingCategory) return;
+
+    await updateCategoryApi(editingCategory.id, name);
+
+    setCategories(
+      categories.map((c) =>
+        c.id === editingCategory.id ? { ...c, name } : c
+      )
+    );
+
+    setEditingCategory(null);
   };
 
   if (!selectedCategory) return <p>Loading...</p>;
-  // CREATE
-    const addCategory = async (name: string) => {
-      try {
-        const newCat = await createCategory(name);
-        setCategories((prev) => [...prev, newCat]);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-  
-    // DELETE
-    const deleteCategory = async (id: number) => {
-      try {
-        await deleteCategoryApi(id);
-        setCategories(categories.filter((cat) => cat.id !== id));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-  // OPEN EDIT MODAL
-    const openEditModal = (id: number) => {
-      const category = categories.find((cat) => cat.id === id);
-      if (category) {
-        setEditingCategory(category);
-        setShowModal(true);
-      }
-    };
-  
-    // UPDATE
-    const updateCategoryName = async (name: string) => {
-      if (!editingCategory) return;
-  
-      try {
-        await updateCategoryApi(editingCategory.id, name);
-  
-        setCategories(
-          categories.map((cat) =>
-            cat.id === editingCategory.id ? { ...cat, name } : cat
-          )
-        );
-  
-        setEditingCategory(null);
-      } catch (err) {
-        console.error(err);
-      }
-    };
 
   return (
     <Navbar>
       <div className="category-page">
-        {/* LEFT: Category List */}
+
+        {/* LEFT */}
         <div className="category-list">
-          <div className="category-list-header">
+          <div className="category-header">
             <h3>Categories</h3>
             <button
-              className="add-category-btn"
-              onClick={() => navigate("/add-category")}
-            >
-              + Add New Category
-            </button>
-            <button
+              className="add-btn"
               onClick={() => {
                 setEditingCategory(null);
                 setShowModal(true);
               }}
-              className="category-btn"
             >
-              Categories
+              + Add
             </button>
           </div>
 
-          {categories.map((category) => (
+          {categories.map((cat) => (
             <div
-              key={category.id}
+              key={cat.id}
               className={`category-item ${
-                category.id === selectedCategory.id ? "active" : ""
+                selectedCategory.id === cat.id ? "active" : ""
               }`}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedCategory(cat)}
             >
-              <h4>{category.name}</h4>
+              {cat.name}
             </div>
           ))}
         </div>
 
-        {/* RIGHT: Category Details */}
+        {/* RIGHT */}
         <div className="category-details">
           <h2>{selectedCategory.name}</h2>
 
-          <div className="category-buttons">
-            <button className="edit-btn" onClick={goToEdit}>
-              Edit Category
-            </button> 
-            <button className="delete-btn" onClick={() => deleteCategory(selectedCategory.id)}>
-              Delete Category
+          <div className="category-actions">
+            <button
+              className="edit-btn"
+              onClick={() => openEditModal(selectedCategory)}
+            >
+              Edit
             </button>
+
+            <button
+              className="delete-btn"
+              onClick={() => deleteCategory(selectedCategory.id)}
+            >
+              Delete
+            </button>
+          </div>
+
+          <div className="task-list">
+            {tasks.length === 0 ? (
+              <p className="empty">No tasks in this category</p>
+            ) : (
+              tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+              ))
+            )}
           </div>
         </div>
       </div>
+
+      {/* MODAL */}
+      <CategoryModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onCreate={addCategory}
+        onUpdate={updateCategoryName}
+        editingCategory={editingCategory}
+      />
     </Navbar>
   );
 };

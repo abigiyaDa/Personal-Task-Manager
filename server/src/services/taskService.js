@@ -4,7 +4,8 @@ import {
   getTaskByIdRepo,
   updateTaskRepo,
   deleteTaskRepo,
-  assignCategoryToTaskRepo
+  assignCategoryToTaskRepo,
+  getTasksByCategoryRepo
 } from "../repositories/taskRepository.js";
 
 import { validateTask } from "../validators/taskValidator.js";
@@ -98,4 +99,10 @@ export const assignCategoryToTask = async (taskId, categoryId, user) => {
   await assignCategoryToTaskRepo(taskId, categoryId);
 
   return { message: "Category assigned to task" };
+};
+
+// get tasks by category
+export const getTasksByCategory = async (categoryId, user) => {
+  const tasks = await getTasksByCategoryRepo(categoryId, user.id);
+  return tasks;
 };

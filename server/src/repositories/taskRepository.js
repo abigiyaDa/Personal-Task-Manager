@@ -32,6 +32,25 @@ export const getAllTasksRepo = async (user_id) => {
 
   return rows;
 };
+export const getTasksByCategoryRepo = async (category_id, user_id) => {
+  const [rows] = await db.execute(`
+    SELECT 
+      t.task_id AS id,
+      t.title,
+      t.description,
+      t.status,
+      t.priority,
+      t.due_date AS dueDate,
+      c.name AS categoryName
+    FROM Task t
+    INNER JOIN TaskCategory tc ON t.task_id = tc.task_id
+    INNER JOIN Category c ON tc.category_id = c.category_id
+    WHERE tc.category_id = ? AND t.user_id = ?
+    ORDER BY t.created_at DESC
+  `, [category_id, user_id]);
+
+  return rows;
+};
 
 export const getTaskByIdRepo = async (task_id, user_id) => {
   const [rows] = await db.execute(

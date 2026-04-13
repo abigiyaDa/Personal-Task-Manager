@@ -5,7 +5,8 @@ import {
   getTaskByIdController,
   updateTaskController,
   deleteTaskController,
-  assignCategoryController
+  assignCategoryController,
+  getTasksByCategoryController
 } from "../controllers/taskController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -16,6 +17,7 @@ router.use(protect);
 
 router.post("/", createTaskController);
 router.post("/assign-category", protect, assignCategoryController);
+router.get("/category/:categoryId", getTasksByCategoryController);
 router.get("/", getAllTasksController);
 router.get("/:id", getTaskByIdController);
 router.put("/:id", updateTaskController);

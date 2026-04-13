@@ -414,3 +414,9 @@ img, canvas, svg {
   padding: 25px;
   border-radius: 12px;
 }
+/*  when screen stack {the my tasks and below the details} */
+@media (max-width: 468px) {
+  .task-page {
+    grid-template-columns: 1fr; /* stack */
+  }
+}

@@ -1,4 +1,4 @@
-import { FaUserCircle, FaTachometerAlt, FaTasks, FaPlus, FaCalendarAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaSearch, FaBell } from "react-icons/fa";
+import { FaUserCircle, FaTachometerAlt, FaTasks, FaPlus, FaCalendarAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaSearch, FaBell,  FaLayerGroup} from "react-icons/fa";
 import "../styles/navbar.css";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
@@ -62,7 +62,7 @@ const Navbar: React.FC<Props> = ({ children }) => {
           </li>
           <li>
             <NavLink to="/category">
-              <FaPlus /> Category
+              <FaLayerGroup /> Category
             </NavLink>
           </li>
           <li>

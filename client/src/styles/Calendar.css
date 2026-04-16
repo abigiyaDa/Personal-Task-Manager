@@ -89,13 +89,6 @@
   background: #b91c1c;
 }
 
-/* TASK GRID */
-.task-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
 .empty {
   color: #777;
 }

@@ -1,0 +1,139 @@
+/* /home/abigu/internship/personal-task-manager/Personal-Task-Manager/client/src/components/TaskForm.css */
+
+.task-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.form-group label {
+  width: 120px;
+  font-weight: 600;
+  color: #333;
+  padding-top: 0.5rem;
+  font-size: 14px;
+}
+
+.form-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.field-label {
+  color: #999;
+  font-family: monospace;
+  font-size: 14px;
+  width: 30px;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
+.form-field textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.priority-field {
+  align-items: flex-start;
+}
+
+.priority-options {
+  flex: 1;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.priority-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+}
+
+.priority-option input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #7c3aed;
+}
+
+.priority-option.selected span {
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.submit-btn {
+  width: 120px;
+  margin:20px auto;
+  display: block;
+  padding: 0.75rem;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background: #7c3aed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .task-form {
+    padding: 1.5rem;
+  }
+  
+  .form-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    width: 100%;
+    padding-top: 0;
+  }
+  
+  .form-field {
+    width: 100%;
+  }
+  
+  .priority-options {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

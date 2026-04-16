@@ -1,0 +1,94 @@
+@baseUrl = http://localhost:5000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTc3NTIwODkwMSwiZXhwIjoxNzc1Mjk1MzAxfQ.djMd_54-gBVcB83rO46XjMHExi5YrieeK6_rs4iTfak
+
+### Health Check
+GET {{baseUrl}}/
+
+### Register User
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Test User",
+  "email": "test@gmail.com",
+  "password": "123456",
+  "confirmPassword": "123456"
+}
+
+### Login User
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "123456"
+}
+
+
+### Create Task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Finish Backend",
+  "description": "Complete task API",
+  "priority": "High",
+  "due_date": "2026-04-10"
+}
+
+### Get All Tasks
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
+
+### Get Task by ID
+GET {{baseUrl}}/tasks/1
+Authorization: Bearer {{token}}
+
+### Update Task
+PUT {{baseUrl}}/tasks/7
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Finish Backend API",
+  "description": "Complete task API with all endpoints",
+  "priority": "High",
+  "due_date": "2026-04-15",
+  "status": "In Progress"
+}
+
+### Delete Task
+DELETE {{baseUrl}}/tasks/6
+Authorization: Bearer {{token}}
+
+### create category
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Work"
+}
+
+### get all categories
+GET {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+
+### get category by id
+GET {{baseUrl}}/categories/1
+Authorization: Bearer {{token}}
+
+### update category
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Work Projects"
+} 
+
+### delete category
+DELETE {{baseUrl}}/categories/1
+Authorization: Bearer {{token}}
+

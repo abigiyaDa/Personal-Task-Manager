@@ -141,7 +141,7 @@ const Calendar: React.FC = () => {
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]); // store tasks of the selected date
   const [categories, setCategories] = useState<Category[]>([]); //store categories 
 
-  // Fetch tasks
+  // Fetch tasks - runs once on component mount - fetches all tasks and categories in parallel and stores them in state
   useEffect(() => {
   const fetchData = async () => {
     try {
@@ -149,38 +149,40 @@ const Calendar: React.FC = () => {
         getTasks(),
         getCategories(),
       ]);
+      // then update state with fetched tasks and categories
       setTasks(taskData);
       setCategories(categoryData);
     } catch (error) {
       console.error("Failed to fetch data:", error);
     }
   };
-
+  // call the async function to fetch data - runs once []empty dependency array
   fetchData();
 }, []);
 
-  // Group tasks
+  // Group tasks - only when tasks change - memoize eles it runs on ever render
   const tasksByDate = useMemo(
     () => groupTasksByDate(tasks, currentYear),
     [tasks, currentYear]
   );
-
+  // handles when date is clicked - sets selected date and tasks for that date in state
   const handleDateClick = (dateKey: string, tasks: Task[]) => {
     setSelectedDate(dateKey);
     setSelectedTasks(tasks);
   };
-
+  // handles to mark task as completed or undo
   const toggleTaskStatus = async (task: Task) => {
     const newStatus =
       task.status === "Completed" ? "In Progress" : "Completed";
 
     try {
       await updateTask(task.id, { status: newStatus });
-
+      // refetch tasks after update to get the latest data and update state - ensures calendar reflects changes immediately
       const updatedTasks = await getTasks();
       setTasks(updatedTasks);
 
       if (selectedDate) {
+        // filters tasks for that date after updating status
         const tasksForDate = updatedTasks.filter(
           (t) =>
             parseDueDateToKey(
@@ -188,6 +190,7 @@ const Calendar: React.FC = () => {
               currentYear
             ) === selectedDate
         );
+        // update selected tasks to reflect the status change
         setSelectedTasks(tasksForDate);
       }
     } catch (err) {
@@ -195,14 +198,16 @@ const Calendar: React.FC = () => {
     }
   };
 
-  const months = Array.from({ length: 12 }, (_, i) => i);
+  const months = Array.from({ length: 12 }, (_, i) => i); // array of month indices [0,1,...11]
 
   return (
     <div className="calendar-page">
       <h1>Task Calendar</h1>
 
       <div className="calendar-grid">
+        {/* loop through all months */}
         {months.map((month) => (
+          // pass month, year, tasks grouped by date, and date click handler to MonthCard component
           <MonthCard
             key={month}
             year={currentYear}
@@ -214,6 +219,7 @@ const Calendar: React.FC = () => {
       </div>
 
       {/* Modal */}
+      {/* if a date is selected */}
       {selectedDate && (
         <div className="calendar-modal">
           <div className="calendar-modal-content">
@@ -239,14 +245,17 @@ const Calendar: React.FC = () => {
          
             <TaskForm
               initialData={{ due_date: selectedDate }}
-              categories={categories} // ✅ FIX
+              categories={categories} // FIX
               onSubmit={async (data) => {
                 try {
+                  // create a task
                   await createTask(data);
 
+                  // refetch tasks to get the new task and update calendar
                   const updatedTasks = await getTasks();
                   setTasks(updatedTasks);
 
+                  // close modal after creating task
                   setSelectedDate(null);
                 } catch (err) {
                   console.error("Failed to create task:", err);
@@ -254,6 +263,7 @@ const Calendar: React.FC = () => {
               }}
             />
 
+            {/* close button */}
             <button
               onClick={() => setSelectedDate(null)}
               className="close-btn"

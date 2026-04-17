@@ -2,7 +2,7 @@ import axios from "axios";
 
 // custom Axios instance called API - avoid repeating base URL and token logic in every request
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Add token automatically to requests if user is logged in
